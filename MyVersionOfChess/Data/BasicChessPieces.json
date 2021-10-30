@@ -1,0 +1,74 @@
+[
+    {
+        "name": "Rook",
+        "image": "blackRook",
+        "value": "Middle",
+        "color": "Black"
+    },
+    {
+        "name": "Knight",
+        "image": "blackKnight",
+        "value": "Middle",
+        "color": "Black"
+    },
+    {
+        "name": "Bishop",
+        "image": "blackBishop",
+        "value": "Middle",
+        "color": "Black"
+    },
+    {
+        "name": "Queen",
+        "image": "blackQueen",
+        "value": "High",
+        "color": "Black"
+    },
+    {
+        "name": "King",
+        "image": "blackKing",
+        "value": "High",
+        "color": "Black"
+    },
+    {
+        "name": "Pawn",
+        "image": "blackPawn",
+        "value": "Low",
+        "color": "Black"
+    },
+    {
+        "name": "Rook",
+        "image": "whiteRook",
+        "value": "Middle",
+        "color": "White"
+    },
+    {
+        "name": "Knight",
+        "image": "whiteKnight",
+        "value": "Middle",
+        "color": "White"
+    },
+    {
+        "name": "Bishop",
+        "image": "whiteBishop",
+        "value": "Middle",
+        "color": "White"
+    },
+    {
+        "name": "Queen",
+        "image": "whiteQueen",
+        "value": "High",
+        "color": "White"
+    },
+    {
+        "name": "King",
+        "image": "whiteKing",
+        "value": "High",
+        "color": "White"
+    },
+    {
+        "name": "Pawn",
+        "image": "whitePawn",
+        "value": "Low",
+        "color": "White"
+    },
+]

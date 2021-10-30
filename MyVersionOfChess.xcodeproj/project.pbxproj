@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2E108AD726F37197007FB64C /* MyVersionOfChessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AD626F37197007FB64C /* MyVersionOfChessApp.swift */; };
+		2E108ADB26F37199007FB64C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E108ADA26F37199007FB64C /* Assets.xcassets */; };
+		2E108ADE26F37199007FB64C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E108ADD26F37199007FB64C /* Preview Assets.xcassets */; };
+		2E108AE926F371F2007FB64C /* ChessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AE826F371F2007FB64C /* ChessModel.swift */; };
+		2E108AEB26F3721F007FB64C /* PieceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AEA26F3721F007FB64C /* PieceModel.swift */; };
+		2E108AEE26F37247007FB64C /* SideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AED26F37247007FB64C /* SideModel.swift */; };
+		2E108AF026F37259007FB64C /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AEF26F37259007FB64C /* ThemeModel.swift */; };
+		2E108AF226F37292007FB64C /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AF126F37292007FB64C /* PieceView.swift */; };
+		2E108AF526F372D0007FB64C /* ChessExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AF426F372D0007FB64C /* ChessExtension.swift */; };
+		2E108AF726F372EB007FB64C /* PieceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AF626F372EB007FB64C /* PieceExtension.swift */; };
+		2E108AF926F3730A007FB64C /* ThemeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AF826F3730A007FB64C /* ThemeExtension.swift */; };
+		2E108AFB26F3732C007FB64C /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AFA26F3732C007FB64C /* ColorExtension.swift */; };
+		2E108AFD26F37346007FB64C /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AFC26F37346007FB64C /* ArrayExtension.swift */; };
+		2E108AFF26F3737A007FB64C /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108AFE26F3737A007FB64C /* IntExtension.swift */; };
+		2E108B0126F373CF007FB64C /* ChessViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B0026F373CF007FB64C /* ChessViewModel.swift */; };
+		2E108B0426F37447007FB64C /* BasicChessPieces.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E108B0326F37447007FB64C /* BasicChessPieces.json */; };
+		2E108B0626F3761F007FB64C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B0526F3761F007FB64C /* GameView.swift */; };
+		2E108B0826F37669007FB64C /* BoardPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B0726F37669007FB64C /* BoardPieceView.swift */; };
+		2E108B0A26F3768E007FB64C /* CircleOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B0926F3768E007FB64C /* CircleOverlayView.swift */; };
+		2E108B0C26F37706007FB64C /* GameViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B0B26F37706007FB64C /* GameViewExtension.swift */; };
+		2E108B1226F38B6F007FB64C /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1126F38B6F007FB64C /* SquareView.swift */; };
+		2E108B1426F38BAA007FB64C /* SquareBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1326F38BAA007FB64C /* SquareBoardView.swift */; };
+		2E108B1626F38E89007FB64C /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1526F38E89007FB64C /* OptionsView.swift */; };
+		2E108B1826F38EC1007FB64C /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1726F38EC1007FB64C /* ThemeView.swift */; };
+		2E108B1A26F38EEC007FB64C /* PromotionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */; };
+		2E108B1C26F38F49007FB64C /* SidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1B26F38F49007FB64C /* SidesView.swift */; };
+		2E108B2026F39750007FB64C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1F26F39750007FB64C /* HomeView.swift */; };
+		2E108B2226F39773007FB64C /* HomeViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2126F39773007FB64C /* HomeViewExtension.swift */; };
+		2E108B2426F3979D007FB64C /* HomeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2326F3979D007FB64C /* HomeButtonView.swift */; };
+		2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */; };
+		2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2C26F3A386007FB64C /* BackButtonView.swift */; };
+		2E51955926F51D7C0062C481 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E51955826F51D7C0062C481 /* CustomAlertView.swift */; };
+		2EDEE2AA26F4A3970027B45D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2A926F4A3970027B45D /* AlertModel.swift */; };
+		2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2AB26F4A4480027B45D /* MessageView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2E108AD326F37197007FB64C /* MyVersionOfChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyVersionOfChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E108AD626F37197007FB64C /* MyVersionOfChessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVersionOfChessApp.swift; sourceTree = "<group>"; };
+		2E108ADA26F37199007FB64C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2E108ADD26F37199007FB64C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2E108ADF26F37199007FB64C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E108AE826F371F2007FB64C /* ChessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessModel.swift; sourceTree = "<group>"; };
+		2E108AEA26F3721F007FB64C /* PieceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceModel.swift; sourceTree = "<group>"; };
+		2E108AED26F37247007FB64C /* SideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideModel.swift; sourceTree = "<group>"; };
+		2E108AEF26F37259007FB64C /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
+		2E108AF126F37292007FB64C /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		2E108AF426F372D0007FB64C /* ChessExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessExtension.swift; sourceTree = "<group>"; };
+		2E108AF626F372EB007FB64C /* PieceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceExtension.swift; sourceTree = "<group>"; };
+		2E108AF826F3730A007FB64C /* ThemeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeExtension.swift; sourceTree = "<group>"; };
+		2E108AFA26F3732C007FB64C /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		2E108AFC26F37346007FB64C /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		2E108AFE26F3737A007FB64C /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
+		2E108B0026F373CF007FB64C /* ChessViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessViewModel.swift; sourceTree = "<group>"; };
+		2E108B0326F37447007FB64C /* BasicChessPieces.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BasicChessPieces.json; sourceTree = "<group>"; };
+		2E108B0526F3761F007FB64C /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		2E108B0726F37669007FB64C /* BoardPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPieceView.swift; sourceTree = "<group>"; };
+		2E108B0926F3768E007FB64C /* CircleOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleOverlayView.swift; sourceTree = "<group>"; };
+		2E108B0B26F37706007FB64C /* GameViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewExtension.swift; sourceTree = "<group>"; };
+		2E108B1126F38B6F007FB64C /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
+		2E108B1326F38BAA007FB64C /* SquareBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareBoardView.swift; sourceTree = "<group>"; };
+		2E108B1526F38E89007FB64C /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
+		2E108B1726F38EC1007FB64C /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
+		2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionAlertView.swift; sourceTree = "<group>"; };
+		2E108B1B26F38F49007FB64C /* SidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidesView.swift; sourceTree = "<group>"; };
+		2E108B1F26F39750007FB64C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2E108B2126F39773007FB64C /* HomeViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewExtension.swift; sourceTree = "<group>"; };
+		2E108B2326F3979D007FB64C /* HomeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonView.swift; sourceTree = "<group>"; };
+		2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewExtension.swift; sourceTree = "<group>"; };
+		2E108B2C26F3A386007FB64C /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		2E51955826F51D7C0062C481 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		2EDEE2A926F4A3970027B45D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
+		2EDEE2AB26F4A4480027B45D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2E108AD026F37197007FB64C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2E108ACA26F37197007FB64C = {
+			isa = PBXGroup;
+			children = (
+				2E108AD526F37197007FB64C /* MyVersionOfChess */,
+				2E108AD426F37197007FB64C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2E108AD426F37197007FB64C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AD326F37197007FB64C /* MyVersionOfChess.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E108AD526F37197007FB64C /* MyVersionOfChess */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AD626F37197007FB64C /* MyVersionOfChessApp.swift */,
+				2E108B0226F37413007FB64C /* Data */,
+				2E108AF326F372A9007FB64C /* Extensions */,
+				2E108AE726F371D8007FB64C /* Views */,
+				2E108AE626F371D1007FB64C /* View Model */,
+				2E108AE526F371CA007FB64C /* Models */,
+				2E108ADA26F37199007FB64C /* Assets.xcassets */,
+				2E108ADF26F37199007FB64C /* Info.plist */,
+				2E108ADC26F37199007FB64C /* Preview Content */,
+			);
+			path = MyVersionOfChess;
+			sourceTree = "<group>";
+		};
+		2E108ADC26F37199007FB64C /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				2E108ADD26F37199007FB64C /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2E108AE526F371CA007FB64C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AE826F371F2007FB64C /* ChessModel.swift */,
+				2E108AEA26F3721F007FB64C /* PieceModel.swift */,
+				2E108AED26F37247007FB64C /* SideModel.swift */,
+				2E108AEF26F37259007FB64C /* ThemeModel.swift */,
+				2EDEE2A926F4A3970027B45D /* AlertModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2E108AE626F371D1007FB64C /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B0026F373CF007FB64C /* ChessViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		2E108AE726F371D8007FB64C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B2926F39ECE007FB64C /* Home */,
+				2EDEE2AE26F4C7170027B45D /* Game */,
+				2EDEE2A626F4A3650027B45D /* Alert */,
+				2E108B2826F39EBE007FB64C /* Miscellaneous */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2E108AF326F372A9007FB64C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B2526F39E55007FB64C /* Views */,
+				2E108B2626F39E82007FB64C /* Models */,
+				2E108B2726F39E92007FB64C /* Types */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2E108B0226F37413007FB64C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B0326F37447007FB64C /* BasicChessPieces.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2E108B0D26F38B10007FB64C /* Pieces */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AF126F37292007FB64C /* PieceView.swift */,
+				2E108B0726F37669007FB64C /* BoardPieceView.swift */,
+			);
+			path = Pieces;
+			sourceTree = "<group>";
+		};
+		2E108B0E26F38B1C007FB64C /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B1126F38B6F007FB64C /* SquareView.swift */,
+				2E108B1326F38BAA007FB64C /* SquareBoardView.swift */,
+				2E108B0926F3768E007FB64C /* CircleOverlayView.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		2E108B2526F39E55007FB64C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B2126F39773007FB64C /* HomeViewExtension.swift */,
+				2E108B0B26F37706007FB64C /* GameViewExtension.swift */,
+				2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2E108B2626F39E82007FB64C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AF426F372D0007FB64C /* ChessExtension.swift */,
+				2E108AF626F372EB007FB64C /* PieceExtension.swift */,
+				2E108AF826F3730A007FB64C /* ThemeExtension.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2E108B2726F39E92007FB64C /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				2E108AFC26F37346007FB64C /* ArrayExtension.swift */,
+				2E108AFE26F3737A007FB64C /* IntExtension.swift */,
+				2E108AFA26F3732C007FB64C /* ColorExtension.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		2E108B2826F39EBE007FB64C /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B2C26F3A386007FB64C /* BackButtonView.swift */,
+			);
+			path = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		2E108B2926F39ECE007FB64C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2EDEE2A526F3E3060027B45D /* Main */,
+				2EDEE2A226F3E2CE0027B45D /* Options */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2EDEE2A226F3E2CE0027B45D /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				2EDEE2AD26F4C6F00027B45D /* Main */,
+				2EDEE2A426F3E2E00027B45D /* Side */,
+				2EDEE2A326F3E2D80027B45D /* Theme */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
+		2EDEE2A326F3E2D80027B45D /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B1726F38EC1007FB64C /* ThemeView.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		2EDEE2A426F3E2E00027B45D /* Side */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B1B26F38F49007FB64C /* SidesView.swift */,
+			);
+			path = Side;
+			sourceTree = "<group>";
+		};
+		2EDEE2A526F3E3060027B45D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B1F26F39750007FB64C /* HomeView.swift */,
+				2E108B2326F3979D007FB64C /* HomeButtonView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2EDEE2A626F4A3650027B45D /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				2EDEE2AB26F4A4480027B45D /* MessageView.swift */,
+				2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */,
+				2E51955826F51D7C0062C481 /* CustomAlertView.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		2EDEE2AD26F4C6F00027B45D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B1526F38E89007FB64C /* OptionsView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2EDEE2AE26F4C7170027B45D /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				2EDEE2AF26F4C72A0027B45D /* Main */,
+				2E108B0D26F38B10007FB64C /* Pieces */,
+				2E108B0E26F38B1C007FB64C /* Board */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		2EDEE2AF26F4C72A0027B45D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2E108B0526F3761F007FB64C /* GameView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2E108AD226F37197007FB64C /* MyVersionOfChess */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E108AE226F37199007FB64C /* Build configuration list for PBXNativeTarget "MyVersionOfChess" */;
+			buildPhases = (
+				2E108ACF26F37197007FB64C /* Sources */,
+				2E108AD026F37197007FB64C /* Frameworks */,
+				2E108AD126F37197007FB64C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyVersionOfChess;
+			productName = MyVersionOfChess;
+			productReference = 2E108AD326F37197007FB64C /* MyVersionOfChess.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2E108ACB26F37197007FB64C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					2E108AD226F37197007FB64C = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+				};
+			};
+			buildConfigurationList = 2E108ACE26F37197007FB64C /* Build configuration list for PBXProject "MyVersionOfChess" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2E108ACA26F37197007FB64C;
+			productRefGroup = 2E108AD426F37197007FB64C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2E108AD226F37197007FB64C /* MyVersionOfChess */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E108AD126F37197007FB64C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E108ADE26F37199007FB64C /* Preview Assets.xcassets in Resources */,
+				2E108B0426F37447007FB64C /* BasicChessPieces.json in Resources */,
+				2E108ADB26F37199007FB64C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2E108ACF26F37197007FB64C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E108B0126F373CF007FB64C /* ChessViewModel.swift in Sources */,
+				2E108AE926F371F2007FB64C /* ChessModel.swift in Sources */,
+				2E108AF526F372D0007FB64C /* ChessExtension.swift in Sources */,
+				2E108B2026F39750007FB64C /* HomeView.swift in Sources */,
+				2E108B1626F38E89007FB64C /* OptionsView.swift in Sources */,
+				2EDEE2AA26F4A3970027B45D /* AlertModel.swift in Sources */,
+				2E108B0626F3761F007FB64C /* GameView.swift in Sources */,
+				2E108AFD26F37346007FB64C /* ArrayExtension.swift in Sources */,
+				2E108AF726F372EB007FB64C /* PieceExtension.swift in Sources */,
+				2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */,
+				2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */,
+				2E108B1426F38BAA007FB64C /* SquareBoardView.swift in Sources */,
+				2E108AF226F37292007FB64C /* PieceView.swift in Sources */,
+				2E108B2226F39773007FB64C /* HomeViewExtension.swift in Sources */,
+				2E108B0C26F37706007FB64C /* GameViewExtension.swift in Sources */,
+				2E108B0826F37669007FB64C /* BoardPieceView.swift in Sources */,
+				2E108B1826F38EC1007FB64C /* ThemeView.swift in Sources */,
+				2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */,
+				2E108AEE26F37247007FB64C /* SideModel.swift in Sources */,
+				2E108B1C26F38F49007FB64C /* SidesView.swift in Sources */,
+				2E108AFF26F3737A007FB64C /* IntExtension.swift in Sources */,
+				2E108AF026F37259007FB64C /* ThemeModel.swift in Sources */,
+				2E108AF926F3730A007FB64C /* ThemeExtension.swift in Sources */,
+				2E108AEB26F3721F007FB64C /* PieceModel.swift in Sources */,
+				2E108B1A26F38EEC007FB64C /* PromotionAlertView.swift in Sources */,
+				2E108B2426F3979D007FB64C /* HomeButtonView.swift in Sources */,
+				2E108AFB26F3732C007FB64C /* ColorExtension.swift in Sources */,
+				2E108B1226F38B6F007FB64C /* SquareView.swift in Sources */,
+				2E108AD726F37197007FB64C /* MyVersionOfChessApp.swift in Sources */,
+				2E51955926F51D7C0062C481 /* CustomAlertView.swift in Sources */,
+				2E108B0A26F3768E007FB64C /* CircleOverlayView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2E108AE026F37199007FB64C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2E108AE126F37199007FB64C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2E108AE326F37199007FB64C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MyVersionOfChess/Preview Content\"";
+				DEVELOPMENT_TEAM = Q6DV6C6352;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MyVersionOfChess/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = yann.MyVersionOfChess;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E108AE426F37199007FB64C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"MyVersionOfChess/Preview Content\"";
+				DEVELOPMENT_TEAM = Q6DV6C6352;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = MyVersionOfChess/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = yann.MyVersionOfChess;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E108ACE26F37197007FB64C /* Build configuration list for PBXProject "MyVersionOfChess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E108AE026F37199007FB64C /* Debug */,
+				2E108AE126F37199007FB64C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E108AE226F37199007FB64C /* Build configuration list for PBXNativeTarget "MyVersionOfChess" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E108AE326F37199007FB64C /* Debug */,
+				2E108AE426F37199007FB64C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2E108ACB26F37197007FB64C /* Project object */;
+}

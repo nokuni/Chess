@@ -1,0 +1,46 @@
+//
+//  BoardPieceView.swift
+//  MyVersionOfChess
+//
+//  Created by Yann Christophe Maertens on 16/09/2021.
+//
+
+import SwiftUI
+
+struct BoardPieceView: View {
+    
+    var chess: Chess?
+    
+    @Binding var coloredOverlayMatchIndex: Int?
+    @Binding var coloredOverlayPieceIndex: Int?
+    @Binding var coloredOverlayPreMoves: [Int]
+    
+    var selectPiece: ((Int, Piece) -> Void)?
+    var selectDestination: ((Int, Piece) -> Void)?
+    var onChanged: ((CGPoint, Int, Piece) -> Void)?
+    var onEnded: ((CGPoint, Int, Piece) -> Void)?
+    
+    var body: some View {
+        LazyVGrid(columns: ChessViewModel.grid, spacing: 0) {
+            if let chess = self.chess {
+                ForEach(chess.pieces.indices) { index in
+                    PieceView(coloredOverlayPreMoves: $coloredOverlayPreMoves, piece: chess.pieces[index], index: index, side: chess.side, onChanged: onChanged, onEnded: onEnded)
+                        .overlay(
+                            CircleOverlayView(selectedIndex: coloredOverlayMatchIndex, index: index)
+                        )
+                        .onTapGesture {
+                            selectPiece?(index, chess.pieces[index])
+                            selectDestination?(index, chess.pieces[index])
+                        }
+                    //.allowsHitTesting(pieces[index].color == side.rawValue || pieces[index].color == "empty" || coloredOverlayPieceIndex != nil ? true : false)
+                }
+            }
+        }
+    }
+}
+
+struct BoardPieceView_Previews: PreviewProvider {
+    static var previews: some View {
+        BoardPieceView(chess: Chess.defaultGame, coloredOverlayMatchIndex: .constant(0), coloredOverlayPieceIndex: .constant(0), coloredOverlayPreMoves: .constant([]))
+    }
+}
