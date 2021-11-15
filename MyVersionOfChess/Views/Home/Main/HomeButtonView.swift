@@ -13,7 +13,7 @@ struct HomeButtonView: View {
     var width, height: CGFloat
     var body: some View {
         ZStack {
-            Color.theme.accent
+            Color.white
                 .cornerRadius(15)
                 .shadow(radius: 5)
             Text(name)

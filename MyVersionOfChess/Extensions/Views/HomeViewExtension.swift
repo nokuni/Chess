@@ -37,6 +37,6 @@ extension HomeView {
 //    }
     
     var Options: some View {
-        OptionsView(isAlertOn: $isAlertOn)
+        OptionsView()
     }
 }

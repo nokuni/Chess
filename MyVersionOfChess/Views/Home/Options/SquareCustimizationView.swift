@@ -11,8 +11,8 @@ struct SquareCustimizationView: View {
     @Binding var theme: Theme
     var body: some View {
         Section {
-            ColorPicker("White squares", selection: $theme.primaryColor)
-            ColorPicker("Black squares", selection: $theme.secondaryColor)
+            ColorPicker("Even Squares", selection: $theme.primaryColor)
+            ColorPicker("Odd Squares", selection: $theme.secondaryColor)
         } header: {
             Text("Board Customization")
         }

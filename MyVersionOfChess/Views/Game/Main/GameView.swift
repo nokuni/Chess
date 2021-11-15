@@ -9,30 +9,20 @@ import SwiftUI
 
 struct GameView: View {
     @EnvironmentObject var vm : ChessViewModel
-    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
-            VStack {
-                BackButtonView()
-                ZStack {
-                    Group {
-                        Board
-                        Pieces
-                    }
-                    PromotionAlert
-                }
-            }
+            Board
+            Pieces
+            PromotionAlert
         }
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
+        .padding(.horizontal)
+        .navigationTitle("Game")
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
-            .preferredColorScheme(.dark)
             .environmentObject(ChessViewModel())
     }
 }

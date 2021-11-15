@@ -38,6 +38,8 @@
 		2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2C26F3A386007FB64C /* BackButtonView.swift */; };
 		2E383B012742D0470073E12D /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B002742D0470073E12D /* SideView.swift */; };
 		2E383B032742D0E30073E12D /* SquareCustimizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B022742D0E30073E12D /* SquareCustimizationView.swift */; };
+		2E383B072742EB770073E12D /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B062742EB770073E12D /* HomeTabView.swift */; };
+		2E383B092742FAE80073E12D /* ResetButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B082742FAE80073E12D /* ResetButtonView.swift */; };
 		2EDEE2AA26F4A3970027B45D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2A926F4A3970027B45D /* AlertModel.swift */; };
 		2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2AB26F4A4480027B45D /* MessageView.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +78,8 @@
 		2E108B2C26F3A386007FB64C /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
 		2E383B002742D0470073E12D /* SideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideView.swift; sourceTree = "<group>"; };
 		2E383B022742D0E30073E12D /* SquareCustimizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCustimizationView.swift; sourceTree = "<group>"; };
+		2E383B062742EB770073E12D /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		2E383B082742FAE80073E12D /* ResetButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetButtonView.swift; sourceTree = "<group>"; };
 		2EDEE2A926F4A3970027B45D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		2EDEE2AB26F4A4480027B45D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +158,7 @@
 		2E108AE726F371D8007FB64C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2E383B062742EB770073E12D /* HomeTabView.swift */,
 				2E108B2926F39ECE007FB64C /* Home */,
 				2EDEE2AE26F4C7170027B45D /* Game */,
 				2EDEE2A626F4A3650027B45D /* Alert */,
@@ -252,6 +257,7 @@
 				2E108B1526F38E89007FB64C /* OptionsView.swift */,
 				2E383B002742D0470073E12D /* SideView.swift */,
 				2E383B022742D0E30073E12D /* SquareCustimizationView.swift */,
+				2E383B082742FAE80073E12D /* ResetButtonView.swift */,
 			);
 			path = Options;
 			sourceTree = "<group>";
@@ -372,6 +378,7 @@
 				2E108AFD26F37346007FB64C /* ArrayExtension.swift in Sources */,
 				2E108AF726F372EB007FB64C /* PieceExtension.swift in Sources */,
 				2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */,
+				2E383B092742FAE80073E12D /* ResetButtonView.swift in Sources */,
 				2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */,
 				2E108B1426F38BAA007FB64C /* SquareBoardView.swift in Sources */,
 				2E108AF226F37292007FB64C /* PieceView.swift in Sources */,
@@ -381,6 +388,7 @@
 				2E108B0826F37669007FB64C /* BoardPieceView.swift in Sources */,
 				2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */,
 				2E108AEE26F37247007FB64C /* SideModel.swift in Sources */,
+				2E383B072742EB770073E12D /* HomeTabView.swift in Sources */,
 				2E108AFF26F3737A007FB64C /* IntExtension.swift in Sources */,
 				2E108AF026F37259007FB64C /* ThemeModel.swift in Sources */,
 				2E108AF926F3730A007FB64C /* ThemeExtension.swift in Sources */,

@@ -13,7 +13,7 @@ struct MyVersionOfChessApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                HomeView()
+                HomeTabView()
             }
             .environmentObject(viewModel)
         }

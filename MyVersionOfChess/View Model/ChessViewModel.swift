@@ -21,12 +21,10 @@ final class ChessViewModel: ObservableObject {
     @Published var isPromotionAlertActive = false
     @Published var selectedPromotionPieceIndex: Int? = nil
     
-    @Published var themeIndex = ""
-    
     static let grid = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 8)
+    static let instance = ChessViewModel()
     
     // MARK: - Premoves and pieces movement visual related
-    
     var resetPremoves: Void { coloredOverlayPreMoves.removeAll() }
     func addPremoves(piece: Piece, index: Int) {
         for moveIndex in allowedTappedMoves(piece: piece, index: index) { coloredOverlayPreMoves.append(moveIndex) }
@@ -59,7 +57,6 @@ final class ChessViewModel: ObservableObject {
     }
     
     // MARK: - Pawn Promotion related
-    
     var promotionsPieces: [Piece] {
         let playerPieces = chess.theme.pieces.filter { $0.color == chess.side.rawValue }
         let queen = playerPieces.filter { $0.name == "Queen" }
@@ -73,14 +70,10 @@ final class ChessViewModel: ObservableObject {
         if let promotionIndex = selectedPromotionPieceIndex {
             chess.pieces[promotionIndex] = piece
             isPromotionAlertActive = false
-            print("You have selected a \(piece.name)")
         }
     }
     
     // MARK: - Conditions
-    
-    func isSquareEmpty(_ piece: Piece) -> Bool { piece.color == "empty" }
-    func isOurSide(_ piece: Piece) -> Bool { piece.color == chess.side.rawValue && !piece.name.isEmpty }
     func checkPieceMovement(piece: Piece, pieceIndex: Int) {
         if let match = coloredOverlayMatchIndex {
             if allowedTappedMoves(piece: chess.pieces[pieceIndex], index: pieceIndex).contains(match) {
@@ -94,7 +87,6 @@ final class ChessViewModel: ObservableObject {
     }
     
     // MARK: - Piece selection and actions
-    
     func movePiece(match: Int, pieceIndex: Int) {
         chess.pieces[match] = chess.pieces[pieceIndex]
         chess.pieces[pieceIndex] = Piece.empty
@@ -122,7 +114,7 @@ final class ChessViewModel: ObservableObject {
     // via Tap Gesture
     func selectPiece(index: Int, piece: Piece) {
         resetPremoves
-        if !isSquareEmpty(piece) && isOurSide(piece) {
+        if !piece.isSquareEmpty && piece.isOurSide {
             overlayPieceSquare(at: index)
             addPremoves(piece: piece, index: index)
         }
@@ -130,7 +122,7 @@ final class ChessViewModel: ObservableObject {
     func selectDestination(index: Int, piece: Piece) {
         guard let pieceIndex = coloredOverlayPieceIndex else { return }
         
-        if isSquareEmpty(piece) || !isOurSide(piece) {
+        if piece.isSquareEmpty || !piece.isOurSide {
             overlayMatchingSquare(at: index)
             checkPieceMovement(piece: piece, pieceIndex: pieceIndex)
             //turn = .AI
@@ -138,7 +130,6 @@ final class ChessViewModel: ObservableObject {
     }
     
     // MARK: -  Get rows, columns and diagonals
-    
     var rowsIndices: [[Int]] {
         return Array(chess.board.indices).separate(into: 8)
     }
@@ -231,7 +222,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex)} else {
-                    if !isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
+                    if !chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
                     break
                 }
             }
@@ -260,7 +251,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex) } else {
-                    if !isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
+                    if !chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
                     break
                 }
             }
@@ -269,20 +260,19 @@ final class ChessViewModel: ObservableObject {
     }
     
     // MARK: - Pawn related
-    
     func pawnMoveOneIndex(piece: Piece, index: Int) -> Int {
         let isPawn = piece.name == "Pawn"
         let playerIndex = index - 8
         let aiIndex = index + 8
         
-        return isPawn && isOurSide(piece) ? playerIndex : aiIndex
+        return isPawn && piece.isOurSide ? playerIndex : aiIndex
     }
     func pawnMoveTwoIndex(piece: Piece, index: Int) -> Int {
         let isPawn = piece.name == "Pawn"
         let playerIndex = index - 16
         let aiIndex = index + 16
         
-        return isPawn && isOurSide(piece) ? playerIndex : aiIndex
+        return isPawn && piece.isOurSide ? playerIndex : aiIndex
     }
     func pawnMoveDiagonals(piece: Piece, index: Int) -> [Int] {
         let isPawn = piece.name == "Pawn"
@@ -301,7 +291,7 @@ final class ChessViewModel: ObservableObject {
         
         let blackDiagonals = [blackRightDiagonal, blackLeftDiagonal].filter { $0 != -1 }
         
-        return !board.contains(where: whiteDiagonals.contains) || !board.contains(where: blackDiagonals.contains) ? [] : isPawn && isOurSide(piece) ? whiteDiagonals : blackDiagonals
+        return !board.contains(where: whiteDiagonals.contains) || !board.contains(where: blackDiagonals.contains) ? [] : isPawn && piece.isOurSide ? whiteDiagonals : blackDiagonals
     }
     var promote: Void {
         guard let match = coloredOverlayMatchIndex else { return }
@@ -316,17 +306,15 @@ final class ChessViewModel: ObservableObject {
     }
     
     // MARK: - Chess pieces behaviors (via Tap Gesture)
-    
     func tappedRookMoves(piece: Piece, index: Int) -> [Int] {
         var result = [Int]()
         let scope = scopeAxis(index: index)
         
         for move in scope {
-            if !isOurSide(chess.pieces[move]) {
+            if !chess.pieces[move].isOurSide {
                 result.append(move)
             }
         }
-        print(result)
         return result
     }
     func tappedKnightMoves(piece: Piece, index: Int) -> [Int] {
@@ -357,7 +345,7 @@ final class ChessViewModel: ObservableObject {
         let moves = (topMoves + rightMoves + bottomMoves + leftMoves).filter { Chess.boardIndices.contains($0) }
         
         for move in moves {
-            if !isOurSide(chess.pieces[move]) { result.append(move) }
+            if !chess.pieces[move].isOurSide { result.append(move) }
         }
         return result
     }
@@ -366,7 +354,7 @@ final class ChessViewModel: ObservableObject {
         let scope = scopeDiagonals(index: index)
         
         for move in scope {
-            if !isOurSide(chess.pieces[move]) {
+            if !chess.pieces[move].isOurSide {
                 result.append(move)
             }
         }
@@ -376,7 +364,7 @@ final class ChessViewModel: ObservableObject {
         var result = [Int]()
         let scope = scopeAxis(index: index) + scopeDiagonals(index: index)
         for move in scope {
-            if !isOurSide(chess.pieces[move]) {
+            if !chess.pieces[move].isOurSide {
                 result.append(move)
             }
         }
@@ -386,7 +374,7 @@ final class ChessViewModel: ObservableObject {
         var result = [Int]()
         let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9].filter { Chess.boardIndices.contains($0) }
         for move in moves {
-            if !isOurSide(chess.pieces[move]) {
+            if !chess.pieces[move].isOurSide {
                 result.append(move)
             }
         }
@@ -402,20 +390,19 @@ final class ChessViewModel: ObservableObject {
         let two = pawnMoveTwoIndex(piece: piece, index: index)
         let diagonals = pawnMoveDiagonals(piece: piece, index: index)
         
-        let isMovingOne = isSquareEmpty(chess.pieces[one])
-        let isMovingTwo = isOnStartRow && isSquareEmpty(chess.pieces[two]) && isSquareEmpty(chess.pieces[one])
+        let isMovingOne = chess.pieces[one].isSquareEmpty
+        let isMovingTwo = isOnStartRow && chess.pieces[two].isSquareEmpty && chess.pieces[one].isSquareEmpty
         
         if isMovingOne { result.append(one) }
         if isMovingTwo { result.append(two) }
         
         for moveIndex in diagonals {
-            if !isOurSide(chess.pieces[moveIndex]) && !isSquareEmpty(chess.pieces[moveIndex]) { result.append(moveIndex) }
+            if !chess.pieces[moveIndex].isOurSide && !chess.pieces[moveIndex].isSquareEmpty { result.append(moveIndex) }
         }
         return result
     }
     
     // MARK: - Chess pieces behaviors (via Drag Gesture)
-    
     func draggedPawnMoves(location: CGPoint, index: Int, piece: Piece) {
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
@@ -435,7 +422,7 @@ final class ChessViewModel: ObservableObject {
         
         var check: Void {
             for number in checkDiagonals {
-                if chess.pieces[number].name.contains("King") && !isOurSide(chess.pieces[number]) {
+                if chess.pieces[number].name.contains("King") && !chess.pieces[number].isOurSide {
                     print("Check")
                     break
                 }
@@ -451,8 +438,8 @@ final class ChessViewModel: ObservableObject {
         let isMovingOneForward = match == one
         let isMovingTwoForWard = isOnStartRow && match == two && chess.pieces[index - 8].image == "empty"
         
-        if isOurSide(chess.pieces[index]) {
-            if !isSquareEmpty(chess.pieces[match]) {
+        if chess.pieces[index].isOurSide {
+            if !chess.pieces[match].isSquareEmpty {
                 for number in diagonals {
                     if match == number {
                         pieceDropped(location: location, index: index, piece: piece, match: match)
@@ -462,7 +449,7 @@ final class ChessViewModel: ObservableObject {
                     }
                 }
             }
-            if isSquareEmpty(chess.pieces[match]) {
+            if chess.pieces[match].isSquareEmpty {
                 if isMovingTwoForWard {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
                     check
@@ -486,32 +473,32 @@ final class ChessViewModel: ObservableObject {
         var resultScope = [Int]()
         
         for number in pawnCheckScope {
-            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("Pawn") {
+            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("Pawn") {
                 resultScope.append(number)
             }
         }
         for number in knightCheckScope {
-            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("Knight") {
+            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("Knight") {
                 resultScope.append(number)
             }
         }
         for number in scopeDiagonals(index: match) {
-            if !isOurSide(chess.pieces[number]) && (chess.pieces[number].name.contains("Bishop") || chess.pieces[number].name.contains("Queen")) {
+            if !chess.pieces[number].isOurSide && (chess.pieces[number].name.contains("Bishop") || chess.pieces[number].name.contains("Queen")) {
                 resultScope.append(number)
             }
         }
         for number in scopeAxis(index: match) {
-            if !isOurSide(chess.pieces[number]) && (chess.pieces[number].name.contains("Rook") || chess.pieces[number].name.contains("Queen")) {
+            if !chess.pieces[number].isOurSide && (chess.pieces[number].name.contains("Rook") || chess.pieces[number].name.contains("Queen")) {
                 resultScope.append(number)
             }
         }
         for number in kingCheckScope {
-            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("King") {
+            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("King") {
                 resultScope.append(number)
             }
         }
         
-        if !isOurSide(chess.pieces[match]), resultScope.isEmpty {
+        if !chess.pieces[match].isOurSide, resultScope.isEmpty {
             for move in moves {
                 if match == move {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
@@ -534,7 +521,7 @@ final class ChessViewModel: ObservableObject {
         
         
         
-        if isOurSide(chess.pieces[index]), isPossibleMove {
+        if chess.pieces[index].isOurSide, isPossibleMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
@@ -547,14 +534,14 @@ final class ChessViewModel: ObservableObject {
         
         var check: Void {
             for index in checkScope {
-                if chess.pieces[index].name.contains("King") && !isOurSide(chess.pieces[index]) {
+                if chess.pieces[index].name.contains("King") && !chess.pieces[index].isOurSide {
                     print("Check")
                     break
                 }
             }
         }
         
-        if !isOurSide(chess.pieces[match]) {
+        if !chess.pieces[match].isOurSide {
             for number in scope {
                 if match == number {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
@@ -578,7 +565,7 @@ final class ChessViewModel: ObservableObject {
         
         var isPossibleToMove: Bool { return scopeDiagonals(index: index).contains(match) }
         
-        if isOurSide(chess.pieces[index]), isPossibleToMove {
+        if chess.pieces[index].isOurSide, isPossibleToMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
@@ -600,7 +587,7 @@ final class ChessViewModel: ObservableObject {
         
         var isPossibleToMove: Bool { return moves.contains(match) }
         
-        if isOurSide(chess.pieces[index]), isPossibleToMove {
+        if chess.pieces[index].isOurSide, isPossibleToMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
@@ -716,7 +703,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex)} else {
-                    if isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
+                    if chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
                     break
                 }
             }
@@ -745,7 +732,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex) } else {
-                    if isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
+                    if chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
                     break
                 }
             }
@@ -763,11 +750,11 @@ final class ChessViewModel: ObservableObject {
         let two = pawnMoveTwoIndex(piece: piece, index: index)
         let diagonals = pawnMoveDiagonals(piece: piece, index: index)
         
-        let isMovingOne = isSquareEmpty(chess.pieces[one])
-        let isMovingTwo = isOnStartRow && isSquareEmpty(chess.pieces[two]) && isSquareEmpty(chess.pieces[one])
+        let isMovingOne = chess.pieces[one].isSquareEmpty
+        let isMovingTwo = isOnStartRow && chess.pieces[two].isSquareEmpty && chess.pieces[one].isSquareEmpty
         
         for moveIndex in diagonals {
-            if isOurSide(chess.pieces[moveIndex]) && !isSquareEmpty(chess.pieces[moveIndex]) {
+            if chess.pieces[moveIndex].isOurSide && !chess.pieces[moveIndex].isSquareEmpty {
                 result[0].append(moveIndex)
             }
         }

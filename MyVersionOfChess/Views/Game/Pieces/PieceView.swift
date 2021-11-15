@@ -13,6 +13,7 @@ struct PieceView: View {
     var piece: Piece
     var index: Int
     var side: Side
+    var width, height: CGFloat
     var onChanged: ((CGPoint, Int, Piece) -> Void)?
     var onEnded: ((CGPoint, Int, Piece) -> Void)?
     var gesture: some Gesture {
@@ -45,7 +46,7 @@ struct PieceView: View {
             }
         }
         .scaleEffect(dragAmount == .zero ? 1 : 1.5)
-        .frame(width: UIScreen.main.bounds.width/8, height: UIScreen.main.bounds.width/8)
+        .frame(width: width, height: height)
         .zIndex(dragAmount == .zero ? 0 : 1)
         .offset(dragAmount)
         .gesture(gesture)
@@ -54,6 +55,6 @@ struct PieceView: View {
 
 struct PieceView_Previews: PreviewProvider {
     static var previews: some View {
-        PieceView(coloredOverlayPreMoves: .constant([]), piece: Piece.empty, index: 0, side: .white)
+        PieceView(coloredOverlayPreMoves: .constant([]), piece: Piece.empty, index: 0, side: .white, width: 100, height: 100)
     }
 }

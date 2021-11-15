@@ -13,11 +13,12 @@ struct SquareView: View {
     var number: Int?
     var letter: String?
     var index: Int
+    var width, height: CGFloat
     var body: some View {
         ZStack {
             if let color = color {
                 Rectangle()
-                    .frame(width: UIScreen.main.bounds.width/8, height: UIScreen.main.bounds.width/8)
+                    .frame(width: width, height: height)
                     .foregroundColor(color)
             }
             if let number = number {
@@ -40,6 +41,6 @@ struct SquareView: View {
 
 struct SquareView_Previews: PreviewProvider {
     static var previews: some View {
-        SquareView(theme: .basic, index: 0)
+        SquareView(theme: .basic, index: 0, width: 100, height: 100)
     }
 }

@@ -9,31 +9,20 @@ import SwiftUI
 
 struct OptionsView: View {
     @EnvironmentObject var vm: ChessViewModel
-    @Binding var isAlertOn: Bool
+    @State var isAlerting = false
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                List {
-                    SideView(side: $vm.chess.side, isAlertOn: $isAlertOn, isCurrentGameExisting: vm.isCurrentGameExisting, switchSide: vm.switchSide)
-                    SquareCustimizationView(theme: $vm.chess.theme)
-                }
+            List {
+                SideView(side: $vm.chess.side, isCurrentGameExisting: vm.isCurrentGameExisting, switchSide: vm.switchSide)
+                SquareCustimizationView(theme: $vm.chess.theme)
+                ResetButtonView(isAlerting: $isAlerting, isCurrentGameExisting: vm.isCurrentGameExisting, reset: vm.reset)
             }
-            .alert("", isPresented: $isAlertOn) {
-                Button("Switch") {
-                    vm.reset()
-                }
-            } message: {
-                Text("Switching side will result in a reset of your current game")
-            }
-
-        }
-        .navigationTitle("Options")
+            .navigationTitle("Options")
     }
 }
 
 struct OptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        OptionsView(isAlertOn: .constant(false))
+        OptionsView()
             .environmentObject(ChessViewModel())
     }
 }

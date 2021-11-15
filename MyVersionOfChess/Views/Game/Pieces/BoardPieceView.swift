@@ -25,7 +25,7 @@ struct BoardPieceView: View {
             LazyVGrid(columns: ChessViewModel.grid, spacing: 0) {
                 if let chess = self.chess {
                     ForEach(chess.pieces.indices) { index in
-                        PieceView(coloredOverlayPreMoves: $coloredOverlayPreMoves, piece: chess.pieces[index], index: index, side: chess.side, onChanged: onChanged, onEnded: onEnded)
+                        PieceView(coloredOverlayPreMoves: $coloredOverlayPreMoves, piece: chess.pieces[index], index: index, side: chess.side, width: geometry.size.width * 0.125, height: geometry.size.width * 0.125, onChanged: onChanged, onEnded: onEnded)
                             .overlay(
                                 CircleOverlayView(selectedIndex: coloredOverlayMatchIndex, index: index)
                             )

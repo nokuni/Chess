@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SideView: View {
     @Binding var side: Side
-    @Binding var isAlertOn: Bool
     var isCurrentGameExisting: Bool
     var switchSide: ((Side) -> Void)?
     var body: some View {
@@ -21,20 +20,21 @@ struct SideView: View {
                         .font(.system(size: 20, weight: .heavy, design: .rounded))
                 }
             }
+            .disabled(isCurrentGameExisting)
             .pickerStyle(.segmented)
             .onChange(of: side) { side in
-                if isCurrentGameExisting {
-                    isAlertOn.toggle()
-                } else { switchSide?(side) }
+                switchSide?(side)
             }
         } header: {
             Text("Side")
+        } footer: {
+            Text("\(isCurrentGameExisting ? "Game in progress ..." : "")")
         }
     }
 }
 
 struct SideView_Previews: PreviewProvider {
     static var previews: some View {
-        SideView(side: .constant(.white), isAlertOn: .constant(false), isCurrentGameExisting: false)
+        SideView(side: .constant(.white), isCurrentGameExisting: false)
     }
 }

@@ -25,9 +25,12 @@ struct SquareBoardView: View {
             Rectangle()
                 .foregroundColor(coloredOverlayMatchIndex == index || coloredOverlayPieceIndex == index ? .theme.premove : .clear)
                 .opacity(0.5)
-                .onChange(of: geo.frame(in: .global)) { value in
+                .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
                 }
+//                .onChange(of: geo.frame(in: .global)) { value in
+//                    chess.frames[index] = geo.frame(in: .global)
+//                }
         }
     }
     func preMovesOverlay(_ index: Int) -> some View {
@@ -35,9 +38,12 @@ struct SquareBoardView: View {
             Rectangle()
                 .foregroundColor(!coloredOverlayPreMoves.contains(index) ? .clear :  coloredOverlayPreMoves.contains(index) && chess.pieces[index].color != chess.side.rawValue && chess.pieces[index] != Piece.empty ? .red : .orange)
                 .opacity(0.5)
-                .onChange(of: geo.frame(in: .global)) { value in
+                .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
                 }
+//                .onChange(of: geo.frame(in: .global)) { value in
+//                    chess.frames[index] = geo.frame(in: .global)
+//                }
         }
     }
     
@@ -50,7 +56,7 @@ struct SquareBoardView: View {
                                    color: squareColors?(index),
                                    number: squareNumbers?(index),
                                    letter: squareLetters?(index),
-                                   index: index)
+                                   index: index, width: geometry.size.width * 0.125, height: geometry.size.width * 0.125)
                     }
                     .allowsHitTesting(false)
                     .overlay(overlay(index))
