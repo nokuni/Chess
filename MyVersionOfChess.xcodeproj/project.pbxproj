@@ -30,15 +30,14 @@
 		2E108B1226F38B6F007FB64C /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1126F38B6F007FB64C /* SquareView.swift */; };
 		2E108B1426F38BAA007FB64C /* SquareBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1326F38BAA007FB64C /* SquareBoardView.swift */; };
 		2E108B1626F38E89007FB64C /* OptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1526F38E89007FB64C /* OptionsView.swift */; };
-		2E108B1826F38EC1007FB64C /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1726F38EC1007FB64C /* ThemeView.swift */; };
 		2E108B1A26F38EEC007FB64C /* PromotionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */; };
-		2E108B1C26F38F49007FB64C /* SidesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1B26F38F49007FB64C /* SidesView.swift */; };
 		2E108B2026F39750007FB64C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B1F26F39750007FB64C /* HomeView.swift */; };
 		2E108B2226F39773007FB64C /* HomeViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2126F39773007FB64C /* HomeViewExtension.swift */; };
 		2E108B2426F3979D007FB64C /* HomeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2326F3979D007FB64C /* HomeButtonView.swift */; };
 		2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */; };
 		2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2C26F3A386007FB64C /* BackButtonView.swift */; };
-		2E51955926F51D7C0062C481 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E51955826F51D7C0062C481 /* CustomAlertView.swift */; };
+		2E383B012742D0470073E12D /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B002742D0470073E12D /* SideView.swift */; };
+		2E383B032742D0E30073E12D /* SquareCustimizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B022742D0E30073E12D /* SquareCustimizationView.swift */; };
 		2EDEE2AA26F4A3970027B45D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2A926F4A3970027B45D /* AlertModel.swift */; };
 		2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2AB26F4A4480027B45D /* MessageView.swift */; };
 /* End PBXBuildFile section */
@@ -69,15 +68,14 @@
 		2E108B1126F38B6F007FB64C /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		2E108B1326F38BAA007FB64C /* SquareBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareBoardView.swift; sourceTree = "<group>"; };
 		2E108B1526F38E89007FB64C /* OptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsView.swift; sourceTree = "<group>"; };
-		2E108B1726F38EC1007FB64C /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromotionAlertView.swift; sourceTree = "<group>"; };
-		2E108B1B26F38F49007FB64C /* SidesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidesView.swift; sourceTree = "<group>"; };
 		2E108B1F26F39750007FB64C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2E108B2126F39773007FB64C /* HomeViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewExtension.swift; sourceTree = "<group>"; };
 		2E108B2326F3979D007FB64C /* HomeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonView.swift; sourceTree = "<group>"; };
 		2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewExtension.swift; sourceTree = "<group>"; };
 		2E108B2C26F3A386007FB64C /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
-		2E51955826F51D7C0062C481 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
+		2E383B002742D0470073E12D /* SideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideView.swift; sourceTree = "<group>"; };
+		2E383B022742D0E30073E12D /* SquareCustimizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCustimizationView.swift; sourceTree = "<group>"; };
 		2EDEE2A926F4A3970027B45D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		2EDEE2AB26F4A4480027B45D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,27 +249,11 @@
 		2EDEE2A226F3E2CE0027B45D /* Options */ = {
 			isa = PBXGroup;
 			children = (
-				2EDEE2AD26F4C6F00027B45D /* Main */,
-				2EDEE2A426F3E2E00027B45D /* Side */,
-				2EDEE2A326F3E2D80027B45D /* Theme */,
+				2E108B1526F38E89007FB64C /* OptionsView.swift */,
+				2E383B002742D0470073E12D /* SideView.swift */,
+				2E383B022742D0E30073E12D /* SquareCustimizationView.swift */,
 			);
 			path = Options;
-			sourceTree = "<group>";
-		};
-		2EDEE2A326F3E2D80027B45D /* Theme */ = {
-			isa = PBXGroup;
-			children = (
-				2E108B1726F38EC1007FB64C /* ThemeView.swift */,
-			);
-			path = Theme;
-			sourceTree = "<group>";
-		};
-		2EDEE2A426F3E2E00027B45D /* Side */ = {
-			isa = PBXGroup;
-			children = (
-				2E108B1B26F38F49007FB64C /* SidesView.swift */,
-			);
-			path = Side;
 			sourceTree = "<group>";
 		};
 		2EDEE2A526F3E3060027B45D /* Main */ = {
@@ -288,17 +270,8 @@
 			children = (
 				2EDEE2AB26F4A4480027B45D /* MessageView.swift */,
 				2E108B1926F38EEC007FB64C /* PromotionAlertView.swift */,
-				2E51955826F51D7C0062C481 /* CustomAlertView.swift */,
 			);
 			path = Alert;
-			sourceTree = "<group>";
-		};
-		2EDEE2AD26F4C6F00027B45D /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				2E108B1526F38E89007FB64C /* OptionsView.swift */,
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		2EDEE2AE26F4C7170027B45D /* Game */ = {
@@ -404,21 +377,20 @@
 				2E108AF226F37292007FB64C /* PieceView.swift in Sources */,
 				2E108B2226F39773007FB64C /* HomeViewExtension.swift in Sources */,
 				2E108B0C26F37706007FB64C /* GameViewExtension.swift in Sources */,
+				2E383B012742D0470073E12D /* SideView.swift in Sources */,
 				2E108B0826F37669007FB64C /* BoardPieceView.swift in Sources */,
-				2E108B1826F38EC1007FB64C /* ThemeView.swift in Sources */,
 				2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */,
 				2E108AEE26F37247007FB64C /* SideModel.swift in Sources */,
-				2E108B1C26F38F49007FB64C /* SidesView.swift in Sources */,
 				2E108AFF26F3737A007FB64C /* IntExtension.swift in Sources */,
 				2E108AF026F37259007FB64C /* ThemeModel.swift in Sources */,
 				2E108AF926F3730A007FB64C /* ThemeExtension.swift in Sources */,
+				2E383B032742D0E30073E12D /* SquareCustimizationView.swift in Sources */,
 				2E108AEB26F3721F007FB64C /* PieceModel.swift in Sources */,
 				2E108B1A26F38EEC007FB64C /* PromotionAlertView.swift in Sources */,
 				2E108B2426F3979D007FB64C /* HomeButtonView.swift in Sources */,
 				2E108AFB26F3732C007FB64C /* ColorExtension.swift in Sources */,
 				2E108B1226F38B6F007FB64C /* SquareView.swift in Sources */,
 				2E108AD726F37197007FB64C /* MyVersionOfChessApp.swift in Sources */,
-				2E51955926F51D7C0062C481 /* CustomAlertView.swift in Sources */,
 				2E108B0A26F3768E007FB64C /* CircleOverlayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +449,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -532,7 +504,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -552,7 +524,7 @@
 				DEVELOPMENT_TEAM = Q6DV6C6352;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MyVersionOfChess/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -574,7 +546,7 @@
 				DEVELOPMENT_TEAM = Q6DV6C6352;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = MyVersionOfChess/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

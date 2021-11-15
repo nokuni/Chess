@@ -15,17 +15,13 @@ struct GameView: View {
             Color.theme.background.ignoresSafeArea()
             VStack {
                 BackButtonView()
-                Spacer()
                 ZStack {
                     Group {
                         Board
                         Pieces
                     }
-                    .padding(.horizontal, 5)
-
                     PromotionAlert
                 }
-                Spacer()
             }
         }
         .navigationBarHidden(true)

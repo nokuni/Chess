@@ -37,6 +37,7 @@ struct PieceView: View {
             if let image = piece.image {
                 Image(image)
                     .resizable()
+                    .scaledToFit()
                     .scaleEffect(0.7)
             } else {
                 Image(Piece.empty.color)

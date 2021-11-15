@@ -13,7 +13,7 @@ extension GameView {
     }
     
     var Pieces: some View {
-        BoardPieceView(chess: vm.chess ?? Chess.defaultGame, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves, selectPiece: vm.selectPiece, selectDestination: vm.selectDestination, onChanged: vm.pieceHolded, onEnded: vm.allowedDraggedMoved)
+        BoardPieceView(chess: vm.chess, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves, selectPiece: vm.selectPiece, selectDestination: vm.selectDestination, onChanged: vm.pieceHolded, onEnded: vm.allowedDraggedMoved)
     }
     
     var PromotionAlert: some View {

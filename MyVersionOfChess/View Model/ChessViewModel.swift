@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-class ChessViewModel: ObservableObject {
-    @Published var chess: Chess? = nil
+final class ChessViewModel: ObservableObject {
+    @Published var chess: Chess = Chess.defaultGame
     @Published var isYourTurn: Bool = true
     
     // Colored Overlay for pieces movements
@@ -23,7 +23,7 @@ class ChessViewModel: ObservableObject {
     
     @Published var themeIndex = ""
     
-    static let grid = [GridItem](repeating: GridItem(.adaptive(minimum: 20, maximum: 50)), count: 8)
+    static let grid = [GridItem](repeating: GridItem(.flexible(), spacing: 0), count: 8)
     
     // MARK: - Premoves and pieces movement visual related
     
@@ -35,7 +35,6 @@ class ChessViewModel: ObservableObject {
     func overlayMatchingSquare(at index: Int) { coloredOverlayMatchIndex = index }
     
     func getSquareColor(index: Int) -> Color {
-        guard let chess = self.chess else { return .clear }
         for row in Chess.rowsIndices.indices {
             for _ in Chess.rowsIndices[row].indices {
                 if Chess.rowsIndices[row].contains(index) {
@@ -62,7 +61,6 @@ class ChessViewModel: ObservableObject {
     // MARK: - Pawn Promotion related
     
     var promotionsPieces: [Piece] {
-        guard let chess = chess else { return [] }
         let playerPieces = chess.theme.pieces.filter { $0.color == chess.side.rawValue }
         let queen = playerPieces.filter { $0.name == "Queen" }
         let knight = playerPieces.filter { $0.name == "Knight" }
@@ -73,7 +71,7 @@ class ChessViewModel: ObservableObject {
     }
     func choosePromotionPiece(piece: Piece) {
         if let promotionIndex = selectedPromotionPieceIndex {
-            chess?.pieces[promotionIndex] = piece
+            chess.pieces[promotionIndex] = piece
             isPromotionAlertActive = false
             print("You have selected a \(piece.name)")
         }
@@ -82,9 +80,8 @@ class ChessViewModel: ObservableObject {
     // MARK: - Conditions
     
     func isSquareEmpty(_ piece: Piece) -> Bool { piece.color == "empty" }
-    func isOurSide(_ piece: Piece) -> Bool { piece.color == chess?.side.rawValue && !piece.name.isEmpty }
+    func isOurSide(_ piece: Piece) -> Bool { piece.color == chess.side.rawValue && !piece.name.isEmpty }
     func checkPieceMovement(piece: Piece, pieceIndex: Int) {
-        guard let chess = self.chess else { return }
         if let match = coloredOverlayMatchIndex {
             if allowedTappedMoves(piece: chess.pieces[pieceIndex], index: pieceIndex).contains(match) {
                 movePiece(match: match, pieceIndex: pieceIndex)
@@ -99,8 +96,8 @@ class ChessViewModel: ObservableObject {
     // MARK: - Piece selection and actions
     
     func movePiece(match: Int, pieceIndex: Int) {
-        chess?.pieces[match] = chess?.pieces[pieceIndex] ?? Piece.empty
-        chess?.pieces[pieceIndex] = Piece.empty
+        chess.pieces[match] = chess.pieces[pieceIndex]
+        chess.pieces[pieceIndex] = Piece.empty
     }
     var resetSelections: Void {
         coloredOverlayPieceIndex = nil
@@ -109,7 +106,6 @@ class ChessViewModel: ObservableObject {
     
     // via Drag Gesture
     func pieceHolded(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         overlayPieceSquare(at: index)
         if let match = chess.frames.firstIndex(where: { $0.contains(location) }) {
             overlayMatchingSquare(at: match)
@@ -117,9 +113,9 @@ class ChessViewModel: ObservableObject {
         }
     }
     func pieceDropped(location: CGPoint, index: Int, piece: Piece, match: Int) {
-        chess?.pieces[index] = chess?.pieces[match] ?? Piece.empty
-        chess?.pieces[match] = piece
-        chess?.pieces[index] = Piece.empty
+        chess.pieces[index] = chess.pieces[match]
+        chess.pieces[match] = piece
+        chess.pieces[index] = Piece.empty
         isYourTurn.toggle()
     }
     
@@ -144,7 +140,6 @@ class ChessViewModel: ObservableObject {
     // MARK: -  Get rows, columns and diagonals
     
     var rowsIndices: [[Int]] {
-        guard let chess = self.chess else { return [[]] }
         return Array(chess.board.indices).separate(into: 8)
     }
     func getRow(at index: Int) -> [Int] {
@@ -154,14 +149,12 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func getRowIndex(at index: Int) -> Int {
-        guard let chess = self.chess else { return 0 }
         let separatedBoardIndices = Array(chess.board.indices).separate(into: 8)
         guard let rowIndex = separatedBoardIndices.firstIndex(where: { $0.contains(index) }) else { return 0 }
         return rowIndex
     }
     
     var columnsIndices: [[Int]] {
-        guard let chess = self.chess else { return [[]] }
         var separatedBoardIndices = Array(chess.board.indices).separate(into: 8)
         var columns = [[Int]](repeating: [], count: 8)
         
@@ -223,7 +216,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func scopeAxis(index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         let rookColumn = getColumn(at: index)
         let rookRow = getRow(at: index)
         
@@ -248,7 +240,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func scopeDiagonals(index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         let rookColumn = getColumn(at: index)
         
         guard let firstColumn = columnsIndices.first else { return [] }
@@ -327,7 +318,6 @@ class ChessViewModel: ObservableObject {
     // MARK: - Chess pieces behaviors (via Tap Gesture)
     
     func tappedRookMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = scopeAxis(index: index)
         
@@ -340,7 +330,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func tappedKnightMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         
         var topRow = [Int]()
@@ -373,7 +362,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func tappedBishopMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = scopeDiagonals(index: index)
         
@@ -385,7 +373,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func tappedQueenMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = scopeAxis(index: index) + scopeDiagonals(index: index)
         for move in scope {
@@ -396,7 +383,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func tappedKingMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9].filter { Chess.boardIndices.contains($0) }
         for move in moves {
@@ -407,7 +393,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func tappedPawnMoves(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         
         let pawnStartIndices = rowsIndices[6]
@@ -432,7 +417,6 @@ class ChessViewModel: ObservableObject {
     // MARK: - Chess pieces behaviors (via Drag Gesture)
     
     func draggedPawnMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
         let pawnStartIndices = rowsIndices[6]
@@ -491,7 +475,6 @@ class ChessViewModel: ObservableObject {
         }
     }
     func draggedKingMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
         let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9]
@@ -538,7 +521,6 @@ class ChessViewModel: ObservableObject {
         }
     }
     func draggedRookMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         var check: Void {
             for index in scopeAxis(index: match) {
@@ -558,7 +540,6 @@ class ChessViewModel: ObservableObject {
         }
     }
     func draggedKnightMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
         let scope = [index - 15, index - 6, index + 10, index + 17, index + 15, index + 6, index - 10, index - 17]
@@ -584,7 +565,6 @@ class ChessViewModel: ObservableObject {
         }
     }
     func draggedBishopMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
         var check: Void {
@@ -604,7 +584,6 @@ class ChessViewModel: ObservableObject {
         }
     }
     func draggedQueenMoves(location: CGPoint, index: Int, piece: Piece) {
-        guard let chess = self.chess else { return }
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
         
         var moves: [Int] { scopeAxis(index: index) + scopeDiagonals(index: index) }
@@ -671,7 +650,6 @@ class ChessViewModel: ObservableObject {
     
     var startingBoard: [Piece] {
         // "Middle" pieces are Rook, Knight and Bishop. "High" pieces are Queen and King"
-        guard let chess = self.chess else { return [] }
         var unwrappedChess = chess
         
         let blackPieces = unwrappedChess.theme.pieces.filter { $0.color.contains("Black") }
@@ -709,18 +687,20 @@ class ChessViewModel: ObservableObject {
     func reset() {
         resetPremoves
         resetSelections
-        chess?.pieces = [Piece](repeating: Piece.empty, count: 64)
-        chess?.pieces = startingBoard
+        chess.pieces = [Piece](repeating: Piece.empty, count: 64)
+        chess.pieces = startingBoard
     }
     func switchSide(side: Side) {
-        chess?.side = side
+        chess.side = side
         reset()
+    }
+    var isCurrentGameExisting: Bool {
+        return chess.pieces != startingBoard ? true : false
     }
     
     // MARK: - AI
     
     func aiScopeAxis(index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         let rookColumn = getColumn(at: index)
         let rookRow = getRow(at: index)
         
@@ -745,7 +725,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func aiScopeDiagonals(index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         let rookColumn = getColumn(at: index)
         
         guard let firstColumn = columnsIndices.first else { return [] }
@@ -775,7 +754,6 @@ class ChessViewModel: ObservableObject {
     }
     
     func aiPawnMovementResult(piece: Piece, index: Int) -> [[Int]] {
-        guard let chess = self.chess else { return [] }
         var result = [[Int]](repeating: [], count: 3)
         
         let pawnStartIndices = rowsIndices[1]
@@ -847,7 +825,6 @@ class ChessViewModel: ObservableObject {
      }*/
     
     func aiRookMovementResult(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = aiScopeAxis(index: index)
         
@@ -860,7 +837,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func aiBishopMovementResult(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = aiScopeDiagonals(index: index)
         
@@ -872,7 +848,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func aiKnightMovementResult(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         
         var topRow = [Int]()
@@ -907,7 +882,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func aiQueenMovementResult(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let scope = aiScopeAxis(index: index) + aiScopeDiagonals(index: index)
         for move in scope {
@@ -918,7 +892,6 @@ class ChessViewModel: ObservableObject {
         return result
     }
     func aiKingMovementResult(piece: Piece, index: Int) -> [Int] {
-        guard let chess = self.chess else { return [] }
         var result = [Int]()
         let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9].filter { Chess.boardIndices.contains($0) }
         for move in moves {
@@ -931,29 +904,29 @@ class ChessViewModel: ObservableObject {
     
     
     func movePawn() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        let pawnsIndices = piecesIndices.filter { chess?.pieces[$0].name == "Pawn" }
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        let pawnsIndices = piecesIndices.filter { chess.pieces[$0].name == "Pawn" }
         
         guard let firstPawnIndex = pawnsIndices.first else { return false }
         
-        let possiblesMovesIndices = aiPawnMovementResult(piece: chess!.pieces[firstPawnIndex], index: firstPawnIndex)
+        let possiblesMovesIndices = aiPawnMovementResult(piece: chess.pieces[firstPawnIndex], index: firstPawnIndex)
         
         if !possiblesMovesIndices[0].isEmpty {
             if let index = possiblesMovesIndices[0].first {
-                chess?.pieces[index] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-                chess?.pieces[firstPawnIndex] = Piece.empty
+                chess.pieces[index] = chess.pieces[firstPawnIndex]
+                chess.pieces[firstPawnIndex] = Piece.empty
                 return true
             }
         } else if !possiblesMovesIndices[1].isEmpty {
             if let index = possiblesMovesIndices[1].first {
-                chess?.pieces[index] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-                chess?.pieces[firstPawnIndex] = Piece.empty
+                chess.pieces[index] = chess.pieces[firstPawnIndex]
+                chess.pieces[firstPawnIndex] = Piece.empty
                 return true
             }
         } else if !possiblesMovesIndices[2].isEmpty {
             if let index = possiblesMovesIndices[2].first {
-                chess?.pieces[index] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-                chess?.pieces[firstPawnIndex] = Piece.empty
+                chess.pieces[index] = chess.pieces[firstPawnIndex]
+                chess.pieces[firstPawnIndex] = Piece.empty
                 return true
             }
         }
@@ -961,11 +934,11 @@ class ChessViewModel: ObservableObject {
         return false
     }
     func moveKnight() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        let knightsIndices = piecesIndices.filter { chess?.pieces[$0].name == "Knight" }
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        let knightsIndices = piecesIndices.filter { chess.pieces[$0].name == "Knight" }
         guard let randomKnightIndex = knightsIndices.randomElement() else { return false }
         
-        let possiblesMovesIndices = aiKnightMovementResult(piece: chess?.pieces[randomKnightIndex] ?? Piece.empty, index: randomKnightIndex)
+        let possiblesMovesIndices = aiKnightMovementResult(piece: chess.pieces[randomKnightIndex], index: randomKnightIndex)
         
         //let eatMoves = possiblesMovesIndices.filter { chess?.pieces[$0] != Piece.empty }
         
@@ -979,54 +952,54 @@ class ChessViewModel: ObservableObject {
         
         guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
         
-        chess?.pieces[randomMoveIndex] = chess?.pieces[randomKnightIndex] ?? Piece.empty
-        chess?.pieces[randomKnightIndex] = Piece.empty
+        chess.pieces[randomMoveIndex] = chess.pieces[randomKnightIndex]
+        chess.pieces[randomKnightIndex] = Piece.empty
         
         return true
     }
     func moveRook() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        let rooksIndices = piecesIndices.filter { chess?.pieces[$0].name == "Rook" }
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        let rooksIndices = piecesIndices.filter { chess.pieces[$0].name == "Rook" }
         guard let randomRookIndex = rooksIndices.randomElement() else { return false }
         
-        let possiblesMovesIndices = aiRookMovementResult(piece: chess?.pieces[randomRookIndex] ?? Piece.empty, index: randomRookIndex)
+        let possiblesMovesIndices = aiRookMovementResult(piece: chess.pieces[randomRookIndex], index: randomRookIndex)
         
         guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
         
-        chess?.pieces[randomMoveIndex] = chess?.pieces[randomRookIndex] ?? Piece.empty
-        chess?.pieces[randomRookIndex] = Piece.empty
+        chess.pieces[randomMoveIndex] = chess.pieces[randomRookIndex]
+        chess.pieces[randomRookIndex] = Piece.empty
         return true
     }
     func moveBishop() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        let bishopsIndices = piecesIndices.filter { chess?.pieces[$0].name == "Bishop" }
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        let bishopsIndices = piecesIndices.filter { chess.pieces[$0].name == "Bishop" }
         guard let randomBishopIndex = bishopsIndices.randomElement() else { return false }
         
-        let possiblesMovesIndices = aiBishopMovementResult(piece: chess?.pieces[randomBishopIndex] ?? Piece.empty, index: randomBishopIndex)
+        let possiblesMovesIndices = aiBishopMovementResult(piece: chess.pieces[randomBishopIndex], index: randomBishopIndex)
         
         guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
         
-        chess?.pieces[randomMoveIndex] = chess?.pieces[randomBishopIndex] ?? Piece.empty
-        chess?.pieces[randomBishopIndex] = Piece.empty
+        chess.pieces[randomMoveIndex] = chess.pieces[randomBishopIndex]
+        chess.pieces[randomBishopIndex] = Piece.empty
         return true
     }
     func moveQueen() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        guard let queenIndex = piecesIndices.filter({ chess?.pieces[$0].name == "Queen" }).first else { return false }
-        let possiblesMovesIndices = aiQueenMovementResult(piece: chess?.pieces[queenIndex] ?? Piece.empty, index: queenIndex)
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        guard let queenIndex = piecesIndices.filter({ chess.pieces[$0].name == "Queen" }).first else { return false }
+        let possiblesMovesIndices = aiQueenMovementResult(piece: chess.pieces[queenIndex], index: queenIndex)
         guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
         
-        chess?.pieces[randomMoveIndex] = chess?.pieces[queenIndex] ?? Piece.empty
-        chess?.pieces[queenIndex] = Piece.empty
+        chess.pieces[randomMoveIndex] = chess.pieces[queenIndex]
+        chess.pieces[queenIndex] = Piece.empty
         return true
     }
     func moveKing() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess?.pieces[$0].color == "Black" }
-        guard let kingIndex = piecesIndices.filter({ chess?.pieces[$0].name == "King" }).first else { return false }
-        let possiblesMovesIndices = aiKingMovementResult(piece: chess?.pieces[kingIndex] ?? Piece.empty, index: kingIndex)
+        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
+        guard let kingIndex = piecesIndices.filter({ chess.pieces[$0].name == "King" }).first else { return false }
+        let possiblesMovesIndices = aiKingMovementResult(piece: chess.pieces[kingIndex], index: kingIndex)
         guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        chess?.pieces[randomMoveIndex] = chess?.pieces[kingIndex] ?? Piece.empty
-        chess?.pieces[kingIndex] = Piece.empty
+        chess.pieces[randomMoveIndex] = chess.pieces[kingIndex]
+        chess.pieces[kingIndex] = Piece.empty
         return true
     }
     
@@ -1050,7 +1023,6 @@ class ChessViewModel: ObservableObject {
     }
     
     init() {
-        chess = Chess.defaultGame
-        chess?.pieces = startingBoard
+        chess.pieces = startingBoard
     }
 }

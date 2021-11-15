@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BoardPieceView: View {
     
-    var chess: Chess?
+    var chess: Chess
     
     @Binding var coloredOverlayMatchIndex: Int?
     @Binding var coloredOverlayPieceIndex: Int?
@@ -21,18 +21,20 @@ struct BoardPieceView: View {
     var onEnded: ((CGPoint, Int, Piece) -> Void)?
     
     var body: some View {
-        LazyVGrid(columns: ChessViewModel.grid, spacing: 0) {
-            if let chess = self.chess {
-                ForEach(chess.pieces.indices) { index in
-                    PieceView(coloredOverlayPreMoves: $coloredOverlayPreMoves, piece: chess.pieces[index], index: index, side: chess.side, onChanged: onChanged, onEnded: onEnded)
-                        .overlay(
-                            CircleOverlayView(selectedIndex: coloredOverlayMatchIndex, index: index)
-                        )
-                        .onTapGesture {
-                            selectPiece?(index, chess.pieces[index])
-                            selectDestination?(index, chess.pieces[index])
-                        }
-                    //.allowsHitTesting(pieces[index].color == side.rawValue || pieces[index].color == "empty" || coloredOverlayPieceIndex != nil ? true : false)
+        GeometryReader { geometry in
+            LazyVGrid(columns: ChessViewModel.grid, spacing: 0) {
+                if let chess = self.chess {
+                    ForEach(chess.pieces.indices) { index in
+                        PieceView(coloredOverlayPreMoves: $coloredOverlayPreMoves, piece: chess.pieces[index], index: index, side: chess.side, onChanged: onChanged, onEnded: onEnded)
+                            .overlay(
+                                CircleOverlayView(selectedIndex: coloredOverlayMatchIndex, index: index)
+                            )
+                            .onTapGesture {
+                                selectPiece?(index, chess.pieces[index])
+                                selectDestination?(index, chess.pieces[index])
+                            }
+                        //.allowsHitTesting(pieces[index].color == side.rawValue || pieces[index].color == "empty" || coloredOverlayPieceIndex != nil ? true : false)
+                    }
                 }
             }
         }

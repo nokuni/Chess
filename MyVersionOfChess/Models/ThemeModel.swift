@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct Theme: Hashable {
-    let name: String
-    let primaryColor: Color
-    let secondaryColor: Color
+    var primaryColor: Color
+    var secondaryColor: Color
     var pieces: [Piece]
 }
