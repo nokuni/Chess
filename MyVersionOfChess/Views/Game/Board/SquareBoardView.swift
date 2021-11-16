@@ -16,10 +16,6 @@ struct SquareBoardView: View {
     @Binding var coloredOverlayPieceIndex: Int?
     @Binding var coloredOverlayPreMoves: [Int]
     
-    var squareColors: ((Int) -> Color)?
-    var squareNumbers: ((Int) -> Int)?
-    var squareLetters: ((Int) -> String)?
-    
     func overlay(_ index: Int) -> some View {
         GeometryReader { geo in
             Rectangle()
@@ -53,10 +49,11 @@ struct SquareBoardView: View {
                 ForEach(chess.board.indices) { index in
                     ZStack {
                         SquareView(theme: chess.theme,
-                                   color: squareColors?(index),
-                                   number: squareNumbers?(index),
-                                   letter: squareLetters?(index),
+                                   color: chess.getSquareColor(of: index, with: chess.theme),
+                                   number: chess.getSquareNumbers(of: index),
+                                   letter: chess.getSquareLetters(of: index),
                                    index: index, width: geometry.size.width * 0.125, height: geometry.size.width * 0.125)
+                        Text("\(index)")
                     }
                     .allowsHitTesting(false)
                     .overlay(overlay(index))

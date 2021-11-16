@@ -9,7 +9,7 @@ import SwiftUI
 
 extension GameView {
     var Board: some View {
-        SquareBoardView(chess: $vm.chess, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves, squareColors: vm.getSquareColor, squareNumbers: vm.getSquareNumbers, squareLetters: vm.getSquareLetters)
+        SquareBoardView(chess: $vm.chess, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves)
     }
     
     var Pieces: some View {

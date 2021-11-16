@@ -8,13 +8,16 @@
 import Foundation
 
 extension Piece {
-    static let empty = Piece(name: "", image: "empty", value: "", color: "empty")
+    static let empty = Piece(name: "", image: "empty", value: 0, color: "empty")
     static var basic: [Piece] {
         return Bundle.main.decode("BasicChessPieces")
     }
     
+    static func kingMoves(index: Int) -> [Int] {
+        return [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9]
+    }
+    
     var isSquareEmpty: Bool { self.color == "empty" }
-    var isOurSide: Bool { self.color == ChessViewModel.instance.chess.side.rawValue && !self.name.isEmpty }
 }
 
 extension Bundle {

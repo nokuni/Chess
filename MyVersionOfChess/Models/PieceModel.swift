@@ -10,6 +10,6 @@ import Foundation
 struct Piece: Codable, Hashable {
     var name: String
     var image: String?
-    var value: String
+    var value: Int
     var color: String
 }

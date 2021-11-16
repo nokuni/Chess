@@ -40,6 +40,7 @@
 		2E383B032742D0E30073E12D /* SquareCustimizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B022742D0E30073E12D /* SquareCustimizationView.swift */; };
 		2E383B072742EB770073E12D /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B062742EB770073E12D /* HomeTabView.swift */; };
 		2E383B092742FAE80073E12D /* ResetButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B082742FAE80073E12D /* ResetButtonView.swift */; };
+		2E383B4C27442CA40073E12D /* AIJunkFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B4B27442CA40073E12D /* AIJunkFile.swift */; };
 		2EDEE2AA26F4A3970027B45D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2A926F4A3970027B45D /* AlertModel.swift */; };
 		2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EDEE2AB26F4A4480027B45D /* MessageView.swift */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 		2E383B022742D0E30073E12D /* SquareCustimizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCustimizationView.swift; sourceTree = "<group>"; };
 		2E383B062742EB770073E12D /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		2E383B082742FAE80073E12D /* ResetButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetButtonView.swift; sourceTree = "<group>"; };
+		2E383B4B27442CA40073E12D /* AIJunkFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIJunkFile.swift; sourceTree = "<group>"; };
 		2EDEE2A926F4A3970027B45D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		2EDEE2AB26F4A4480027B45D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				2E108B0026F373CF007FB64C /* ChessViewModel.swift */,
+				2E383B4B27442CA40073E12D /* AIJunkFile.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				2E108B2226F39773007FB64C /* HomeViewExtension.swift in Sources */,
 				2E108B0C26F37706007FB64C /* GameViewExtension.swift in Sources */,
 				2E383B012742D0470073E12D /* SideView.swift in Sources */,
+				2E383B4C27442CA40073E12D /* AIJunkFile.swift in Sources */,
 				2E108B0826F37669007FB64C /* BoardPieceView.swift in Sources */,
 				2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */,
 				2E108AEE26F37247007FB64C /* SideModel.swift in Sources */,

@@ -2,73 +2,73 @@
     {
         "name": "Rook",
         "image": "blackRook",
-        "value": "Middle",
+        "value": 5,
         "color": "Black"
     },
     {
         "name": "Knight",
         "image": "blackKnight",
-        "value": "Middle",
+        "value": 3,
         "color": "Black"
     },
     {
         "name": "Bishop",
         "image": "blackBishop",
-        "value": "Middle",
+        "value": 3,
         "color": "Black"
     },
     {
         "name": "Queen",
         "image": "blackQueen",
-        "value": "High",
+        "value": 9,
         "color": "Black"
     },
     {
         "name": "King",
         "image": "blackKing",
-        "value": "High",
+        "value": 100,
         "color": "Black"
     },
     {
         "name": "Pawn",
         "image": "blackPawn",
-        "value": "Low",
+        "value": 1,
         "color": "Black"
     },
     {
         "name": "Rook",
         "image": "whiteRook",
-        "value": "Middle",
+        "value": 5,
         "color": "White"
     },
     {
         "name": "Knight",
         "image": "whiteKnight",
-        "value": "Middle",
+        "value": 3,
         "color": "White"
     },
     {
         "name": "Bishop",
         "image": "whiteBishop",
-        "value": "Middle",
+        "value": 3,
         "color": "White"
     },
     {
         "name": "Queen",
         "image": "whiteQueen",
-        "value": "High",
+        "value": 9,
         "color": "White"
     },
     {
         "name": "King",
         "image": "whiteKing",
-        "value": "High",
+        "value": 100,
         "color": "White"
     },
     {
         "name": "Pawn",
         "image": "whitePawn",
-        "value": "Low",
+        "value": 1,
         "color": "White"
     },
 ]

@@ -16,7 +16,7 @@ struct GameView: View {
             PromotionAlert
         }
         .padding(.horizontal)
-        .navigationTitle("Game")
+        .navigationTitle("\(vm.chess.side.rawValue)")
     }
 }
 

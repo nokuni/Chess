@@ -32,30 +32,6 @@ final class ChessViewModel: ObservableObject {
     func overlayPieceSquare(at index: Int) { coloredOverlayPieceIndex = index }
     func overlayMatchingSquare(at index: Int) { coloredOverlayMatchIndex = index }
     
-    func getSquareColor(index: Int) -> Color {
-        for row in Chess.rowsIndices.indices {
-            for _ in Chess.rowsIndices[row].indices {
-                if Chess.rowsIndices[row].contains(index) {
-                    if index.isEven && row.isEven || index.isOdd && row.isOdd {
-                        return chess.theme.primaryColor
-                    }
-                }
-            }
-        }
-        return chess.theme.secondaryColor
-    }
-    func getSquareNumbers(of index: Int) -> Int {
-        let filteredArray = Array(Chess.boardIndices.filter { $0 % 8 == 0 }.reversed())
-        if let firstIndex = filteredArray.firstIndex(where: { $0 == index}) { return firstIndex + 1 }
-        return 0
-    }
-    func getSquareLetters(index: Int) -> String {
-        let letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
-        guard let lastRow = Chess.rowsIndices.last else { return "" }
-        if let firstIndex = lastRow.firstIndex(where: { $0 == index } ) { return letters[firstIndex] }
-        return ""
-    }
-    
     // MARK: - Pawn Promotion related
     var promotionsPieces: [Piece] {
         let playerPieces = chess.theme.pieces.filter { $0.color == chess.side.rawValue }
@@ -85,6 +61,7 @@ final class ChessViewModel: ObservableObject {
             }
         }
     }
+    func isOurSide(_ piece: Piece) -> Bool { piece.color == chess.side.rawValue && !piece.name.isEmpty }
     
     // MARK: - Piece selection and actions
     func movePiece(match: Int, pieceIndex: Int) {
@@ -114,7 +91,7 @@ final class ChessViewModel: ObservableObject {
     // via Tap Gesture
     func selectPiece(index: Int, piece: Piece) {
         resetPremoves
-        if !piece.isSquareEmpty && piece.isOurSide {
+        if !piece.isSquareEmpty && isOurSide(piece) {
             overlayPieceSquare(at: index)
             addPremoves(piece: piece, index: index)
         }
@@ -122,7 +99,7 @@ final class ChessViewModel: ObservableObject {
     func selectDestination(index: Int, piece: Piece) {
         guard let pieceIndex = coloredOverlayPieceIndex else { return }
         
-        if piece.isSquareEmpty || !piece.isOurSide {
+        if piece.isSquareEmpty || !isOurSide(piece) {
             overlayMatchingSquare(at: index)
             checkPieceMovement(piece: piece, pieceIndex: pieceIndex)
             //turn = .AI
@@ -222,7 +199,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex)} else {
-                    if !chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
+                    if !isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
                     break
                 }
             }
@@ -251,7 +228,7 @@ final class ChessViewModel: ObservableObject {
         for way in scope {
             for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
                 if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex) } else {
-                    if !chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
+                    if !isOurSide(chess.pieces[squareIndex]) { result.append(squareIndex) }
                     break
                 }
             }
@@ -265,14 +242,14 @@ final class ChessViewModel: ObservableObject {
         let playerIndex = index - 8
         let aiIndex = index + 8
         
-        return isPawn && piece.isOurSide ? playerIndex : aiIndex
+        return isPawn && isOurSide(piece) && isYourTurn ? playerIndex : aiIndex
     }
     func pawnMoveTwoIndex(piece: Piece, index: Int) -> Int {
         let isPawn = piece.name == "Pawn"
         let playerIndex = index - 16
         let aiIndex = index + 16
         
-        return isPawn && piece.isOurSide ? playerIndex : aiIndex
+        return isPawn && isOurSide(piece) && isYourTurn ? playerIndex : aiIndex
     }
     func pawnMoveDiagonals(piece: Piece, index: Int) -> [Int] {
         let isPawn = piece.name == "Pawn"
@@ -281,17 +258,17 @@ final class ChessViewModel: ObservableObject {
         guard let leftBorder = columnsIndices.first else { return [] }
         guard let rightBorder = columnsIndices.last else { return [] }
         
-        let whiteRightDiagonal = rightBorder.contains(index) ? -1 : index - 7
-        let whiteLeftDiagonal = leftBorder.contains(index) ? -1 : index - 9
+        let playerRightDiagonal = rightBorder.contains(index) ? -1 : index - 7
+        let playerLeftDiagonal = leftBorder.contains(index) ? -1 : index - 9
         
-        let whiteDiagonals = [whiteRightDiagonal, whiteLeftDiagonal].filter { $0 != -1 }
+        let playerDiagonals = [playerRightDiagonal, playerLeftDiagonal].filter { $0 != -1 }
         
-        let blackRightDiagonal = rightBorder.contains(index) ? -1 : index + 9
-        let blackLeftDiagonal = leftBorder.contains(index) ? -1 : index + 7
+        let AIRightDiagonal = rightBorder.contains(index) ? -1 : index + 9
+        let AILeftDiagonal = leftBorder.contains(index) ? -1 : index + 7
         
-        let blackDiagonals = [blackRightDiagonal, blackLeftDiagonal].filter { $0 != -1 }
+        let AIDiagonals = [AIRightDiagonal, AILeftDiagonal].filter { $0 != -1 }
         
-        return !board.contains(where: whiteDiagonals.contains) || !board.contains(where: blackDiagonals.contains) ? [] : isPawn && piece.isOurSide ? whiteDiagonals : blackDiagonals
+        return !board.contains(where: playerDiagonals.contains) || !board.contains(where: AIDiagonals.contains) ? [] : isPawn && isOurSide(piece) && isYourTurn ? playerDiagonals : AIDiagonals
     }
     var promote: Void {
         guard let match = coloredOverlayMatchIndex else { return }
@@ -311,7 +288,7 @@ final class ChessViewModel: ObservableObject {
         let scope = scopeAxis(index: index)
         
         for move in scope {
-            if !chess.pieces[move].isOurSide {
+            if !isOurSide(chess.pieces[move]) {
                 result.append(move)
             }
         }
@@ -345,7 +322,7 @@ final class ChessViewModel: ObservableObject {
         let moves = (topMoves + rightMoves + bottomMoves + leftMoves).filter { Chess.boardIndices.contains($0) }
         
         for move in moves {
-            if !chess.pieces[move].isOurSide { result.append(move) }
+            if !isOurSide(chess.pieces[move]) { result.append(move) }
         }
         return result
     }
@@ -354,7 +331,7 @@ final class ChessViewModel: ObservableObject {
         let scope = scopeDiagonals(index: index)
         
         for move in scope {
-            if !chess.pieces[move].isOurSide {
+            if !isOurSide(chess.pieces[move]) {
                 result.append(move)
             }
         }
@@ -364,7 +341,7 @@ final class ChessViewModel: ObservableObject {
         var result = [Int]()
         let scope = scopeAxis(index: index) + scopeDiagonals(index: index)
         for move in scope {
-            if !chess.pieces[move].isOurSide {
+            if !isOurSide(chess.pieces[move]) {
                 result.append(move)
             }
         }
@@ -374,7 +351,7 @@ final class ChessViewModel: ObservableObject {
         var result = [Int]()
         let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9].filter { Chess.boardIndices.contains($0) }
         for move in moves {
-            if !chess.pieces[move].isOurSide {
+            if !isOurSide(chess.pieces[move]) {
                 result.append(move)
             }
         }
@@ -397,7 +374,7 @@ final class ChessViewModel: ObservableObject {
         if isMovingTwo { result.append(two) }
         
         for moveIndex in diagonals {
-            if !chess.pieces[moveIndex].isOurSide && !chess.pieces[moveIndex].isSquareEmpty { result.append(moveIndex) }
+            if !isOurSide(chess.pieces[moveIndex]) && !chess.pieces[moveIndex].isSquareEmpty { result.append(moveIndex) }
         }
         return result
     }
@@ -411,18 +388,15 @@ final class ChessViewModel: ObservableObject {
         let lastRow = rowsIndices[0]
         let isOnLastRow = lastRow.contains(match)
         
-        //let diagonalsScope = [index - 7, index - 9].filter({ Chess.boardIndices.contains($0)})
         let one = pawnMoveOneIndex(piece: piece, index: index)
         let two = pawnMoveTwoIndex(piece: piece, index: index)
         let diagonals = pawnMoveDiagonals(piece: piece, index: index)
-        //let moveOneIndex = index - 8
-        //let moveTwoIndex = index - 16
         
-        let checkDiagonals = [match - 7, match - 9].filter({ Chess.boardIndices.contains($0)})
+        let checkDiagonals = pawnMoveDiagonals(piece: piece, index: match)
         
         var check: Void {
             for number in checkDiagonals {
-                if chess.pieces[number].name.contains("King") && !chess.pieces[number].isOurSide {
+                if chess.pieces[number].name.contains("King") && !isOurSide(chess.pieces[number]) {
                     print("Check")
                     break
                 }
@@ -438,34 +412,29 @@ final class ChessViewModel: ObservableObject {
         let isMovingOneForward = match == one
         let isMovingTwoForWard = isOnStartRow && match == two && chess.pieces[index - 8].image == "empty"
         
-        if chess.pieces[index].isOurSide {
-            if !chess.pieces[match].isSquareEmpty {
-                for number in diagonals {
-                    if match == number {
-                        pieceDropped(location: location, index: index, piece: piece, match: match)
-                        promote
-                        check
-                        break
-                    }
-                }
-            }
-            if chess.pieces[match].isSquareEmpty {
-                if isMovingTwoForWard {
-                    pieceDropped(location: location, index: index, piece: piece, match: match)
-                    check
-                } else if isMovingOneForward {
+        if !chess.pieces[match].isSquareEmpty {
+            for number in diagonals {
+                if match == number && !isOurSide(chess.pieces[number]) {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
                     promote
                     check
+                    break
                 }
+            }
+        }
+        if chess.pieces[match].isSquareEmpty {
+            if isMovingTwoForWard {
+                pieceDropped(location: location, index: index, piece: piece, match: match)
+                check
+            } else if isMovingOneForward {
+                pieceDropped(location: location, index: index, piece: piece, match: match)
+                promote
+                check
             }
         }
     }
     func draggedKingMoves(location: CGPoint, index: Int, piece: Piece) {
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
-        
-        let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9]
-        
         let pawnCheckScope = [match - 7, match - 9].filter { Chess.boardIndices.contains($0) }
         let knightCheckScope = [match - 15, match - 6, match + 10, match + 17, match + 15, match + 6, match - 10, match - 17].filter { Chess.boardIndices.contains($0) }
         let kingCheckScope = [match - 8, match - 7, match + 1, match + 9, match + 8, match + 7, match - 1, match - 9].filter { Chess.boardIndices.contains($0) }
@@ -473,33 +442,33 @@ final class ChessViewModel: ObservableObject {
         var resultScope = [Int]()
         
         for number in pawnCheckScope {
-            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("Pawn") {
+            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("Pawn") {
                 resultScope.append(number)
             }
         }
         for number in knightCheckScope {
-            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("Knight") {
+            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("Knight") {
                 resultScope.append(number)
             }
         }
         for number in scopeDiagonals(index: match) {
-            if !chess.pieces[number].isOurSide && (chess.pieces[number].name.contains("Bishop") || chess.pieces[number].name.contains("Queen")) {
+            if !isOurSide(chess.pieces[number]) && (chess.pieces[number].name.contains("Bishop") || chess.pieces[number].name.contains("Queen")) {
                 resultScope.append(number)
             }
         }
         for number in scopeAxis(index: match) {
-            if !chess.pieces[number].isOurSide && (chess.pieces[number].name.contains("Rook") || chess.pieces[number].name.contains("Queen")) {
+            if !isOurSide(chess.pieces[number]) && (chess.pieces[number].name.contains("Rook") || chess.pieces[number].name.contains("Queen")) {
                 resultScope.append(number)
             }
         }
         for number in kingCheckScope {
-            if !chess.pieces[number].isOurSide && chess.pieces[number].name.contains("King") {
+            if !isOurSide(chess.pieces[number]) && chess.pieces[number].name.contains("King") {
                 resultScope.append(number)
             }
         }
         
-        if !chess.pieces[match].isOurSide, resultScope.isEmpty {
-            for move in moves {
+        if !isOurSide(chess.pieces[match]), resultScope.isEmpty {
+            for move in Piece.kingMoves(index: index) {
                 if match == move {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
                     break
@@ -518,30 +487,24 @@ final class ChessViewModel: ObservableObject {
             }
         } // WIP
         var isPossibleMove: Bool { return scopeAxis(index: index).contains(match) }
-        
-        
-        
-        if chess.pieces[index].isOurSide, isPossibleMove {
+        if isOurSide(chess.pieces[index]), isPossibleMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
     }
     func draggedKnightMoves(location: CGPoint, index: Int, piece: Piece) {
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
-        
         let scope = [index - 15, index - 6, index + 10, index + 17, index + 15, index + 6, index - 10, index - 17]
         let checkScope = [match - 15, match - 6, match + 10, match + 17, match + 15, match + 6, match - 10, match - 17].filter { Chess.boardIndices.contains($0) }
-        
         var check: Void {
             for index in checkScope {
-                if chess.pieces[index].name.contains("King") && !chess.pieces[index].isOurSide {
+                if chess.pieces[index].name.contains("King") && !isOurSide(chess.pieces[index]) {
                     print("Check")
                     break
                 }
             }
         }
-        
-        if !chess.pieces[match].isOurSide {
+        if !isOurSide(chess.pieces[match]) {
             for number in scope {
                 if match == number {
                     pieceDropped(location: location, index: index, piece: piece, match: match)
@@ -553,7 +516,6 @@ final class ChessViewModel: ObservableObject {
     }
     func draggedBishopMoves(location: CGPoint, index: Int, piece: Piece) {
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
-        
         var check: Void {
             for index in scopeDiagonals(index: match) {
                 if chess.pieces[index].name == "King" {
@@ -562,20 +524,16 @@ final class ChessViewModel: ObservableObject {
                 }
             }
         }
-        
         var isPossibleToMove: Bool { return scopeDiagonals(index: index).contains(match) }
-        
-        if chess.pieces[index].isOurSide, isPossibleToMove {
+        if isOurSide(chess.pieces[index]), isPossibleToMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
     }
     func draggedQueenMoves(location: CGPoint, index: Int, piece: Piece) {
         guard let match = chess.frames.firstIndex(where: { $0.contains(location) }) else { return }
-        
         var moves: [Int] { scopeAxis(index: index) + scopeDiagonals(index: index) }
         var checkMoves: [Int] { scopeAxis(index: match) + scopeDiagonals(index: match) }
-        
         var check: Void {
             for index in checkMoves {
                 if chess.pieces[index].name == "King" {
@@ -584,10 +542,8 @@ final class ChessViewModel: ObservableObject {
                 }
             }
         }
-        
         var isPossibleToMove: Bool { return moves.contains(match) }
-        
-        if chess.pieces[index].isOurSide, isPossibleToMove {
+        if isOurSide(chess.pieces[index]), isPossibleToMove {
             pieceDropped(location: location, index: index, piece: piece, match: match)
             check
         }
@@ -630,7 +586,7 @@ final class ChessViewModel: ObservableObject {
         }
         resetSelections
         if !isYourTurn {
-            AIMove()
+            moveAIPawn()
             isYourTurn.toggle()
         }
     }
@@ -642,13 +598,13 @@ final class ChessViewModel: ObservableObject {
         let blackPieces = unwrappedChess.theme.pieces.filter { $0.color.contains("Black") }
         let whitePieces = unwrappedChess.theme.pieces.filter { $0.color.contains("White") }
         
-        let middleBlackPieces = blackPieces.filter { $0.value == "Middle" }.sorted { $0.name > $1.name }
-        let highBlackPieces = blackPieces.filter { $0.value == "High" }.sorted { $0.name > $1.name }
-        guard let blackPawn = blackPieces.filter({ $0.value == "Low" }).first else { return [] }
+        let middleBlackPieces = blackPieces.filter { $0.value == 3 || $0.value == 5 }.sorted { $0.name > $1.name }
+        let highBlackPieces = blackPieces.filter { $0.value >= 9 }.sorted { $0.name > $1.name }
+        guard let blackPawn = blackPieces.filter({ $0.value == 1 }).first else { return [] }
         
-        guard let whitePawn = whitePieces.filter({ $0.value == "Low" }).first else { return [] }
-        let highWhitePieces = whitePieces.filter { $0.value == "High" }.sorted { $0.name > $1.name }
-        let middleWhitePieces = whitePieces.filter { $0.value == "Middle" }.sorted { $0.name > $1.name }
+        guard let whitePawn = whitePieces.filter({ $0.value == 1 }).first else { return [] }
+        let highWhitePieces = whitePieces.filter { $0.value >= 9 }.sorted { $0.name > $1.name }
+        let middleWhitePieces = whitePieces.filter { $0.value == 3 || $0.value == 5 }.sorted { $0.name > $1.name }
         
         let blackBackRow = middleBlackPieces + highBlackPieces + middleBlackPieces.reversed()
         let blackFrontRow = [Piece](repeating: blackPawn, count: 8)
@@ -687,326 +643,60 @@ final class ChessViewModel: ObservableObject {
     
     // MARK: - AI
     
-    func aiScopeAxis(index: Int) -> [Int] {
-        let rookColumn = getColumn(at: index)
-        let rookRow = getRow(at: index)
-        
-        let goingUp = Array(rookColumn.filter { $0 < index }.reversed())
-        let goingDown = rookColumn.filter { $0 > index }
-        let goingRight = rookRow.filter { $0 > index }
-        let goingLeft = Array(rookRow.filter { $0 < index }.reversed())
-        
-        let scope = [goingUp, goingDown, goingRight, goingLeft]
-        
-        var result = [Int]()
-        
-        for way in scope {
-            for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
-                if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex)} else {
-                    if chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
-                    break
-                }
-            }
-        }
-        
-        return result
+    var AIPawnIndices: [Int] {
+        let piecesIndices = Chess.boardIndices.filter { !isOurSide(chess.pieces[$0]) }
+        return piecesIndices.filter { chess.pieces[$0].name == "Pawn" }
     }
-    func aiScopeDiagonals(index: Int) -> [Int] {
-        let rookColumn = getColumn(at: index)
-        
-        guard let firstColumn = columnsIndices.first else { return [] }
-        guard let lastColumn = columnsIndices.last else { return [] }
-        
-        let goingUp = Array(rookColumn.filter { $0 < index }.reversed())
-        let goingDown = rookColumn.filter { $0 > index }
-        
-        let goingDiagonalTopRight = incrementIndices(goingUp).filter { !firstColumn.contains($0) }
-        let goingDiagonalTopLeft = decrementIndices(goingUp).filter { !lastColumn.contains($0) }
-        let goingDiagonalBottomRight = incrementIndices(goingDown).filter { !firstColumn.contains($0) }
-        let goingDiagonalBottomLeft = decrementIndices(goingDown).filter { !lastColumn.contains($0) }
-        
-        let scope = [goingDiagonalTopRight, goingDiagonalTopLeft, goingDiagonalBottomRight, goingDiagonalBottomLeft]
-        
-        var result = [Int]()
-        
-        for way in scope {
-            for squareIndex in way.filter({ Chess.boardIndices.contains($0) }) {
-                if chess.pieces[squareIndex].image == "empty" { result.append(squareIndex) } else {
-                    if chess.pieces[squareIndex].isOurSide { result.append(squareIndex) }
-                    break
-                }
-            }
-        }
-        return result
+    var randomAIPawn: Piece {
+        guard let randomPawnIndex = AIPawnIndices.randomElement() else { return Piece.empty }
+        return chess.pieces[randomPawnIndex]
     }
     
-    func aiPawnMovementResult(piece: Piece, index: Int) -> [[Int]] {
-        var result = [[Int]](repeating: [], count: 3)
-        
+    func AIPawnEat() {
+        if let firstIndex = indicesOfPawnsWhoCanEat.first {
+            let diagonals = pawnMoveDiagonals(piece: chess.pieces[firstIndex], index: firstIndex)
+            if let firstDiagonal = diagonals.first,
+               let lastDiagonal = diagonals.last {
+                let diagonalPiecesValues = [chess.pieces[firstDiagonal].value, chess.pieces[lastDiagonal].value]
+                if let mostValuableIndex = diagonalPiecesValues.firstIndex(where: { $0 == diagonalPiecesValues.max() }) {
+                    let diagonal = mostValuableIndex == 0 ? firstDiagonal : lastDiagonal
+                    if isOurSide(chess.pieces[diagonal]) {
+                        chess.pieces[diagonal] = chess.pieces[firstIndex]
+                        chess.pieces[firstIndex] = Piece.empty
+                    }
+                }
+            }
+        }
+    }
+    
+    func moveAIPawn() {
+        guard let randomPawnIndex = AIPawnIndices.randomElement() else { return }
         let pawnStartIndices = rowsIndices[1]
-        let isOnStartRow = pawnStartIndices.contains(index)
+        let isOnStartRow = pawnStartIndices.contains(where: AIPawnIndices.contains)
         
-        let one = pawnMoveOneIndex(piece: piece, index: index)
-        let two = pawnMoveTwoIndex(piece: piece, index: index)
-        let diagonals = pawnMoveDiagonals(piece: piece, index: index)
+        let one = pawnMoveOneIndex(piece: chess.pieces[randomPawnIndex], index: randomPawnIndex)
+        let two = pawnMoveTwoIndex(piece: chess.pieces[randomPawnIndex], index: randomPawnIndex)
         
-        let isMovingOne = chess.pieces[one].isSquareEmpty
-        let isMovingTwo = isOnStartRow && chess.pieces[two].isSquareEmpty && chess.pieces[one].isSquareEmpty
+        AIPawnEat()
+        chess.pieces[one] = chess.pieces[randomPawnIndex]
+        chess.pieces[randomPawnIndex] = Piece.empty
         
-        for moveIndex in diagonals {
-            if chess.pieces[moveIndex].isOurSide && !chess.pieces[moveIndex].isSquareEmpty {
-                result[0].append(moveIndex)
+    }
+    var indicesOfPawnsWhoCanEat: [Int] {
+        var pawnsIndices = [Int]()
+        for pawnIndex in AIPawnIndices {
+            for index in pawnMoveDiagonals(piece: chess.pieces[pawnIndex], index: pawnIndex) {
+                if isOurSide(chess.pieces[index]) { pawnsIndices.append(pawnIndex) }
             }
         }
-        
-        if isMovingTwo { result[1].append(two) }
-        if isMovingOne { result[2].append(one) }
-        
-        return result
-        
+        return Array(Set(pawnsIndices))
     }
-    func aiPawnMoveOneResult() {
-        
-    }
-    /*func aiPawnMoveOneResult() -> Bool {
-     var moveOneResults = [Int]()
-     var moveTwoResults = [Int]()
-     var moveDiagonalsResults = [Int]()
-     
-     let piecesIndices = Chess.boardIndices.filter { !isOurSide(chess?.pieces[$0] ?? Piece.empty) }
-     let pawnsIndices = piecesIndices.filter { chess?.pieces[$0].name == "Pawn" }
-     guard let firstPawnIndex = pawnsIndices.first else { return false }
-     
-     let pawnStartIndices = rowsIndices[1]
-     let isOnStartRow = pawnStartIndices.contains(firstPawnIndex)
-     
-     let one = pawnMoveOneIndex(piece: chess?.pieces[firstPawnIndex] ?? Piece.empty, index: firstPawnIndex)
-     let two = pawnMoveTwoIndex(piece: chess?.pieces[firstPawnIndex] ?? Piece.empty, index: firstPawnIndex)
-     let diagonals = pawnMoveDiagonals(piece: chess?.pieces[firstPawnIndex] ?? Piece.empty, index: firstPawnIndex)
-     
-     let isMovingOne = isSquareEmpty(chess?.pieces[one] ?? Piece.empty)
-     let isMovingTwo = isOnStartRow && isSquareEmpty(chess?.pieces[two] ?? Piece.empty) && isSquareEmpty(chess?.pieces[one] ?? Piece.empty)
-     
-     if isMovingOne { moveOneResults.append(one) }
-     if isMovingTwo { moveTwoResults.append(two) }
-     
-     for diagonal in diagonals {
-     if isOurSide(chess?.pieces[diagonal] ?? Piece.empty) && !isSquareEmpty(chess?.pieces[diagonal] ?? Piece.empty) { moveDiagonalsResults.append(diagonal) }
-     }
-     
-     
-     if !moveDiagonalsResults.isEmpty {
-     guard let firstIndex = moveDiagonalsResults.first else { return false }
-     chess?.pieces[firstIndex] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-     chess?.pieces[firstPawnIndex] = Piece.empty
-     } else if !moveTwoResults.isEmpty {
-     guard let firstIndex = moveTwoResults.first else { return false }
-     chess?.pieces[firstIndex] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-     chess?.pieces[firstPawnIndex] = Piece.empty
-     } else if !moveOneResults.isEmpty {
-     guard let firstIndex = moveOneResults.first else { return false }
-     chess?.pieces[firstIndex] = chess?.pieces[firstPawnIndex] ?? Piece.empty
-     chess?.pieces[firstPawnIndex] = Piece.empty
-     }
-     return false
-     }*/
-    
-    func aiRookMovementResult(piece: Piece, index: Int) -> [Int] {
-        var result = [Int]()
-        let scope = aiScopeAxis(index: index)
-        
-        for move in scope {
-            if chess.pieces[move] == Piece.empty || chess.pieces[move].color == chess.side.rawValue {
-                result.append(move)
-            }
+    func isAnyPawnCanEat() -> Bool {
+        var diagonals = [[Int]](repeating: [], count: AIPawnIndices.count)
+        for pawnIndex in AIPawnIndices {
+            diagonals.append(pawnMoveDiagonals(piece: chess.pieces[pawnIndex], index: pawnIndex))
         }
-        print(result)
-        return result
-    }
-    func aiBishopMovementResult(piece: Piece, index: Int) -> [Int] {
-        var result = [Int]()
-        let scope = aiScopeDiagonals(index: index)
-        
-        for move in scope {
-            if chess.pieces[move] == Piece.empty || chess.pieces[move].color == chess.side.rawValue {
-                result.append(move)
-            }
-        }
-        return result
-    }
-    func aiKnightMovementResult(piece: Piece, index: Int) -> [Int] {
-        var result = [Int]()
-        
-        var topRow = [Int]()
-        var bottomRow = [Int]()
-        var leftColumn = [Int]()
-        var rightColumn = [Int]()
-        
-        if (getRowIndex(at: index) - 2) >= 0 {
-            topRow = rowsIndices[getRowIndex(at: index) - 2]
-        }
-        if (getRowIndex(at: index) + 2) <= rowsIndices.count - 1 {
-            bottomRow = rowsIndices[getRowIndex(at: index) + 2]
-        }
-        if (getColumnIndex(at: index) - 2) >= 0 {
-            leftColumn = columnsIndices[getColumnIndex(at: index) - 2]
-        }
-        if (getColumnIndex(at: index) + 2) <= columnsIndices.count - 1 {
-            rightColumn = columnsIndices[getColumnIndex(at: index) + 2]
-        }
-        
-        let topMoves = [index - 17, index - 15].filter { topRow.contains($0) }
-        let rightMoves = [index - 6, index + 10].filter { rightColumn.contains($0) }
-        let bottomMoves = [index + 17, index + 15].filter { bottomRow.contains($0) }
-        let leftMoves = [index + 6, index - 10].filter { leftColumn.contains($0) }
-        let moves = (topMoves + rightMoves + bottomMoves + leftMoves).filter { Chess.boardIndices.contains($0) }
-        
-        for move in moves {
-            if chess.pieces[move] == Piece.empty || chess.pieces[move].color == chess.side.rawValue {
-                result.append(move)
-            }
-        }
-        return result
-    }
-    func aiQueenMovementResult(piece: Piece, index: Int) -> [Int] {
-        var result = [Int]()
-        let scope = aiScopeAxis(index: index) + aiScopeDiagonals(index: index)
-        for move in scope {
-            if chess.pieces[move] == Piece.empty || chess.pieces[move].color == chess.side.rawValue {
-                result.append(move)
-            }
-        }
-        return result
-    }
-    func aiKingMovementResult(piece: Piece, index: Int) -> [Int] {
-        var result = [Int]()
-        let moves = [index - 8, index - 7, index + 1, index + 9, index + 8, index + 7, index - 1, index - 9].filter { Chess.boardIndices.contains($0) }
-        for move in moves {
-            if chess.pieces[move] == Piece.empty || chess.pieces[move].color == chess.side.rawValue {
-                result.append(move)
-            }
-        }
-        return result
-    }
-    
-    
-    func movePawn() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        let pawnsIndices = piecesIndices.filter { chess.pieces[$0].name == "Pawn" }
-        
-        guard let firstPawnIndex = pawnsIndices.first else { return false }
-        
-        let possiblesMovesIndices = aiPawnMovementResult(piece: chess.pieces[firstPawnIndex], index: firstPawnIndex)
-        
-        if !possiblesMovesIndices[0].isEmpty {
-            if let index = possiblesMovesIndices[0].first {
-                chess.pieces[index] = chess.pieces[firstPawnIndex]
-                chess.pieces[firstPawnIndex] = Piece.empty
-                return true
-            }
-        } else if !possiblesMovesIndices[1].isEmpty {
-            if let index = possiblesMovesIndices[1].first {
-                chess.pieces[index] = chess.pieces[firstPawnIndex]
-                chess.pieces[firstPawnIndex] = Piece.empty
-                return true
-            }
-        } else if !possiblesMovesIndices[2].isEmpty {
-            if let index = possiblesMovesIndices[2].first {
-                chess.pieces[index] = chess.pieces[firstPawnIndex]
-                chess.pieces[firstPawnIndex] = Piece.empty
-                return true
-            }
-        }
-        
-        return false
-    }
-    func moveKnight() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        let knightsIndices = piecesIndices.filter { chess.pieces[$0].name == "Knight" }
-        guard let randomKnightIndex = knightsIndices.randomElement() else { return false }
-        
-        let possiblesMovesIndices = aiKnightMovementResult(piece: chess.pieces[randomKnightIndex], index: randomKnightIndex)
-        
-        //let eatMoves = possiblesMovesIndices.filter { chess?.pieces[$0] != Piece.empty }
-        
-//        if !eatMoves.isEmpty {
-//            if let first = eatMoves.first {
-//                
-//            }
-//        } else {
-//            
-//        }
-        
-        guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        
-        chess.pieces[randomMoveIndex] = chess.pieces[randomKnightIndex]
-        chess.pieces[randomKnightIndex] = Piece.empty
-        
-        return true
-    }
-    func moveRook() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        let rooksIndices = piecesIndices.filter { chess.pieces[$0].name == "Rook" }
-        guard let randomRookIndex = rooksIndices.randomElement() else { return false }
-        
-        let possiblesMovesIndices = aiRookMovementResult(piece: chess.pieces[randomRookIndex], index: randomRookIndex)
-        
-        guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        
-        chess.pieces[randomMoveIndex] = chess.pieces[randomRookIndex]
-        chess.pieces[randomRookIndex] = Piece.empty
-        return true
-    }
-    func moveBishop() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        let bishopsIndices = piecesIndices.filter { chess.pieces[$0].name == "Bishop" }
-        guard let randomBishopIndex = bishopsIndices.randomElement() else { return false }
-        
-        let possiblesMovesIndices = aiBishopMovementResult(piece: chess.pieces[randomBishopIndex], index: randomBishopIndex)
-        
-        guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        
-        chess.pieces[randomMoveIndex] = chess.pieces[randomBishopIndex]
-        chess.pieces[randomBishopIndex] = Piece.empty
-        return true
-    }
-    func moveQueen() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        guard let queenIndex = piecesIndices.filter({ chess.pieces[$0].name == "Queen" }).first else { return false }
-        let possiblesMovesIndices = aiQueenMovementResult(piece: chess.pieces[queenIndex], index: queenIndex)
-        guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        
-        chess.pieces[randomMoveIndex] = chess.pieces[queenIndex]
-        chess.pieces[queenIndex] = Piece.empty
-        return true
-    }
-    func moveKing() -> Bool {
-        let piecesIndices = Chess.boardIndices.filter { chess.pieces[$0].color == "Black" }
-        guard let kingIndex = piecesIndices.filter({ chess.pieces[$0].name == "King" }).first else { return false }
-        let possiblesMovesIndices = aiKingMovementResult(piece: chess.pieces[kingIndex], index: kingIndex)
-        guard let randomMoveIndex = possiblesMovesIndices.randomElement() else { return false }
-        chess.pieces[randomMoveIndex] = chess.pieces[kingIndex]
-        chess.pieces[kingIndex] = Piece.empty
-        return true
-    }
-    
-    func AIMove() {
-        switch true {
-//        case moveRook():
-//            print("Moved Rook")
-//        case moveBishop():
-//            print("Moved Bishop")
-        case moveKnight():
-            print("Moved Knight")
-//        case moveQueen():
-//            print("Moved Queen")
-//        case movePawn():
-//            print("Moved Pawn")
-//        case moveKing():
-//            print("Moved King")
-        default:
-            print("Moved Nothing")
-        }
+        return !diagonals.isEmpty ? true : false
     }
     
     init() {
