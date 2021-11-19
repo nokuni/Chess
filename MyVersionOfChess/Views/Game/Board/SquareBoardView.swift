@@ -12,14 +12,14 @@ import SwiftUI
 struct SquareBoardView: View {
     @Binding var chess: Chess
     
-    @Binding var coloredOverlayMatchIndex: Int?
-    @Binding var coloredOverlayPieceIndex: Int?
-    @Binding var coloredOverlayPreMoves: [Int]
+//    @Binding var coloredOverlayMatchIndex: Int?
+//    @Binding var coloredOverlayPieceIndex: Int?
+//    @Binding var coloredOverlayPreMoves: [Int]
     
     func overlay(_ index: Int) -> some View {
         GeometryReader { geo in
             Rectangle()
-                .foregroundColor(coloredOverlayMatchIndex == index || coloredOverlayPieceIndex == index ? .theme.premove : .clear)
+                .foregroundColor(chess.premoves.coloredOverlayMatchIndex == index || chess.premoves.coloredOverlayPieceIndex == index ? .theme.premove : .clear)
                 .opacity(0.5)
                 .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
@@ -32,7 +32,7 @@ struct SquareBoardView: View {
     func preMovesOverlay(_ index: Int) -> some View {
         GeometryReader { geo in
             Rectangle()
-                .foregroundColor(!coloredOverlayPreMoves.contains(index) ? .clear :  coloredOverlayPreMoves.contains(index) && chess.pieces[index].color != chess.side.rawValue && chess.pieces[index] != Piece.empty ? .red : .orange)
+                .foregroundColor(!chess.premoves.coloredOverlay.contains(index) ? .clear :  chess.premoves.coloredOverlay.contains(index) && chess.pieces[index].color != chess.side.rawValue && chess.pieces[index] != Piece.empty ? .red : .orange)
                 .opacity(0.5)
                 .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
@@ -66,6 +66,6 @@ struct SquareBoardView: View {
 
 struct SquareBoardView_Previews: PreviewProvider {
     static var previews: some View {
-        SquareBoardView(chess: .constant(Chess.defaultGame), coloredOverlayMatchIndex: .constant(0), coloredOverlayPieceIndex: .constant(0), coloredOverlayPreMoves: .constant([]))
+        SquareBoardView(chess: .constant(Chess.defaultGame))
     }
 }

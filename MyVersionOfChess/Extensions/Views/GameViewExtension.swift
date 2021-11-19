@@ -9,14 +9,14 @@ import SwiftUI
 
 extension GameView {
     var Board: some View {
-        SquareBoardView(chess: $vm.chess, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves)
+        SquareBoardView(chess: $vm.chess)
     }
     
     var Pieces: some View {
-        BoardPieceView(chess: vm.chess, coloredOverlayMatchIndex: $vm.coloredOverlayMatchIndex, coloredOverlayPieceIndex: $vm.coloredOverlayPieceIndex, coloredOverlayPreMoves: $vm.coloredOverlayPreMoves, selectPiece: vm.selectPiece, selectDestination: vm.selectDestination, onChanged: vm.pieceHolded, onEnded: vm.allowedDraggedMoved)
+        BoardPieceView(chess: $vm.chess, selectPiece: vm.selectPiece, selectDestination: vm.selectDestination, onChanged: vm.pieceHolded, onEnded: vm.allowedDraggedMoved)
     }
     
     var PromotionAlert: some View {
-        PromotionAlertView(promotionsPieces: vm.promotionsPieces, choosePromotionPiece: vm.choosePromotionPiece, isPromotionAlertActive: vm.isPromotionAlertActive)
+        PromotionAlertView(promotionsPieces: vm.chess.promotion.getPieces(from: vm.chess.side), choosePromotionPiece: vm.choosePromotionPiece, isPromotionAlertActive: vm.chess.promotion.isAlertActive)
     }
 }
