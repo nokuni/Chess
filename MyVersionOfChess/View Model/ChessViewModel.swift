@@ -603,15 +603,17 @@ final class ChessViewModel: ObservableObject {
         }
         return Array(Set(knightsIndices))
     }
-    func getAIKnightThreatenMoves(on number: Int) -> [Int] {
-        var pawnsIndices = [Int]()
-        let nextIndices = AIKnightIndices.map { $0 + number }
-        for pawnIndex in nextIndices {
-            for index in pawnMoveDiagonals(piece: chess.pieces[pawnIndex], index: pawnIndex) {
-                if chess.isOurSide(chess.pieces[index]) { pawnsIndices.append(pawnIndex) }
+    func getAIKnightThreatenMoves() -> [Int] {
+        var threatenIndices = [Int]()
+        guard let firstKnightIndex = AIKnightIndices.first else { return [] }
+        let moves = getKnightMoves(at: firstKnightIndex)
+        for move in moves {
+            if getKnightMoves(at: move).contains(where: { chess.isOurSide(chess.pieces[$0]) }) {
+                threatenIndices.append(move)
             }
         }
-        return Array(Set(pawnsIndices))
+        
+        return threatenIndices
     }
     
     init() {
