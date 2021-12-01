@@ -36,6 +36,7 @@
 		2E108B2426F3979D007FB64C /* HomeButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2326F3979D007FB64C /* HomeButtonView.swift */; };
 		2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */; };
 		2E108B2D26F3A386007FB64C /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E108B2C26F3A386007FB64C /* BackButtonView.swift */; };
+		2E1BE753275213AF003C36E3 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1BE752275213AF003C36E3 /* BundleExtension.swift */; };
 		2E383B012742D0470073E12D /* SideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B002742D0470073E12D /* SideView.swift */; };
 		2E383B032742D0E30073E12D /* SquareCustimizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B022742D0E30073E12D /* SquareCustimizationView.swift */; };
 		2E383B072742EB770073E12D /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E383B062742EB770073E12D /* HomeTabView.swift */; };
@@ -79,6 +80,7 @@
 		2E108B2326F3979D007FB64C /* HomeButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeButtonView.swift; sourceTree = "<group>"; };
 		2E108B2A26F3A074007FB64C /* OptionsViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewExtension.swift; sourceTree = "<group>"; };
 		2E108B2C26F3A386007FB64C /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		2E1BE752275213AF003C36E3 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		2E383B002742D0470073E12D /* SideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideView.swift; sourceTree = "<group>"; };
 		2E383B022742D0E30073E12D /* SquareCustimizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCustimizationView.swift; sourceTree = "<group>"; };
 		2E383B062742EB770073E12D /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				2E108AF426F372D0007FB64C /* ChessExtension.swift */,
 				2E108AF626F372EB007FB64C /* PieceExtension.swift */,
 				2E108AF826F3730A007FB64C /* ThemeExtension.swift */,
+				2E1BE752275213AF003C36E3 /* BundleExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				2E108AFD26F37346007FB64C /* ArrayExtension.swift in Sources */,
 				2E108AF726F372EB007FB64C /* PieceExtension.swift in Sources */,
 				2E108B2B26F3A074007FB64C /* OptionsViewExtension.swift in Sources */,
+				2E1BE753275213AF003C36E3 /* BundleExtension.swift in Sources */,
 				2E383B092742FAE80073E12D /* ResetButtonView.swift in Sources */,
 				2EDEE2AC26F4A4480027B45D /* MessageView.swift in Sources */,
 				2E108B1426F38BAA007FB64C /* SquareBoardView.swift in Sources */,
