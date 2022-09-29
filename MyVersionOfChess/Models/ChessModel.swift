@@ -16,6 +16,7 @@ struct Chess {
     var premoves: Premove
     var promotion: Promotion
     var isYourTurn: Bool
+    var hasGameStarted: Bool = false
     
     func isOurSide(_ piece: Piece) -> Bool { piece.color == side.rawValue && !piece.name.isEmpty }
     

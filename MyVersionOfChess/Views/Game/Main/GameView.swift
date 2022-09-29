@@ -10,13 +10,22 @@ import SwiftUI
 struct GameView: View {
     @EnvironmentObject var vm : ChessViewModel
     var body: some View {
-        ZStack {
-            Board
-            Pieces
-            PromotionAlert
+        NavigationView {
+            ZStack {
+                Board
+                Pieces
+                PromotionAlert
+            }
+            .padding(.horizontal)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Text("\(vm.chess.side.rawValue)")
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                        .foregroundColor(.primary)
+                }
+            }
         }
-        .padding(.horizontal)
-        .navigationTitle("\(vm.chess.side.rawValue)")
     }
 }
 

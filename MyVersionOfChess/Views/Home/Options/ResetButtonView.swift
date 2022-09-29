@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct ResetButtonView: View {
+    @ObservedObject var vm: ChessViewModel
     @Binding var isAlerting: Bool
-    var isCurrentGameExisting: Bool
-    var reset: (() -> Void)?
     var body: some View {
         Section {
             HStack {
                 Spacer()
                 Button("Reset Game", role: .destructive) {
-                    if isCurrentGameExisting { isAlerting.toggle() }
+                    if vm.chess.hasGameStarted { isAlerting.toggle()
+                    }
                 }
                 Spacer()
             }
         }
-        .disabled(!isCurrentGameExisting)
+        .disabled(!vm.chess.hasGameStarted)
         .confirmationDialog("Warning", isPresented: $isAlerting) {
-            Button("Reset", role: .destructive) { reset?() }
+            Button("Reset", role: .destructive) { vm.reset() }
             Button("Cancel", role: .cancel) { }
         } message: {
             Text("There is a game in progress, do you want to reset it?")
@@ -33,6 +33,6 @@ struct ResetButtonView: View {
 
 struct ResetButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        ResetButtonView(isAlerting: .constant(false), isCurrentGameExisting: false)
+        ResetButtonView(vm: ChessViewModel(), isAlerting: .constant(false))
     }
 }

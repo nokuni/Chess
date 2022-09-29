@@ -53,6 +53,7 @@ final class ChessViewModel: ObservableObject {
         chess.pieces[match] = piece
         chess.pieces[index] = Piece.empty
         chess.isYourTurn.toggle()
+        chess.hasGameStarted = true
     }
     
     // via Tap Gesture
@@ -68,6 +69,7 @@ final class ChessViewModel: ObservableObject {
         if piece.isSquareEmpty || !chess.isOurSide(piece) {
             chess.premoves.setOverlayMatchingSquare(at: index)
             checkPieceMovement(piece: piece, pieceIndex: pieceIndex)
+            chess.hasGameStarted = true
             //turn = .AI
         }
     }
@@ -408,13 +410,11 @@ final class ChessViewModel: ObservableObject {
         chess.premoves.resetOverlay()
         chess.pieces = [Piece](repeating: Piece.empty, count: 64)
         chess.pieces = startingBoard
+        chess.hasGameStarted = false
     }
     func switchSide(side: Side) {
         chess.side = side
         reset()
-    }
-    var isCurrentGameExisting: Bool {
-        return chess.pieces != startingBoard ? true : false
     }
     
     // MARK: - AI

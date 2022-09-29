@@ -12,9 +12,9 @@ struct OptionsView: View {
     @State var isAlerting = false
     var body: some View {
             List {
-                SideView(side: $vm.chess.side, isCurrentGameExisting: vm.isCurrentGameExisting, switchSide: vm.switchSide)
+                SideView(vm: vm)
                 SquareCustimizationView(theme: $vm.chess.theme)
-                ResetButtonView(isAlerting: $isAlerting, isCurrentGameExisting: vm.isCurrentGameExisting, reset: vm.reset)
+                ResetButtonView(vm: vm, isAlerting: $isAlerting)
             }
             .navigationTitle("Options")
     }

@@ -8,33 +8,31 @@
 import SwiftUI
 
 struct SideView: View {
-    @Binding var side: Side
-    var isCurrentGameExisting: Bool
-    var switchSide: ((Side) -> Void)?
+    @ObservedObject var vm: ChessViewModel
     var body: some View {
         Section {
-            Picker("", selection: $side) {
+            Picker("", selection: $vm.chess.side) {
                 ForEach(Side.allCases, id: \.self) {
                     Text($0.rawValue.capitalized)
                         .foregroundColor(.blue)
                         .font(.system(size: 20, weight: .heavy, design: .rounded))
                 }
             }
-            .disabled(isCurrentGameExisting)
+            .disabled(vm.chess.hasGameStarted)
             .pickerStyle(.segmented)
-            .onChange(of: side) { side in
-                switchSide?(side)
+            .onChange(of: vm.chess.side) { side in
+                vm.switchSide(side: side)
             }
         } header: {
             Text("Side")
         } footer: {
-            Text("\(isCurrentGameExisting ? "Game in progress ..." : "")")
+            Text("\(vm.chess.hasGameStarted ? "Game in progress ..." : "")")
         }
     }
 }
 
 struct SideView_Previews: PreviewProvider {
     static var previews: some View {
-        SideView(side: .constant(.white), isCurrentGameExisting: false)
+        SideView(vm: ChessViewModel())
     }
 }

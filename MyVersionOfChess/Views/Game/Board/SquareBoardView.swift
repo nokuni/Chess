@@ -24,9 +24,9 @@ struct SquareBoardView: View {
                 .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
                 }
-//                .onChange(of: geo.frame(in: .global)) { value in
-//                    chess.frames[index] = geo.frame(in: .global)
-//                }
+                .onChange(of: geo.frame(in: .global)) { value in
+                    chess.frames[index] = geo.frame(in: .global)
+                }
         }
     }
     func preMovesOverlay(_ index: Int) -> some View {
@@ -37,23 +37,23 @@ struct SquareBoardView: View {
                 .onAppear {
                     chess.frames[index] = geo.frame(in: .global)
                 }
-//                .onChange(of: geo.frame(in: .global)) { value in
-//                    chess.frames[index] = geo.frame(in: .global)
-//                }
+                .onChange(of: geo.frame(in: .global)) { value in
+                    chess.frames[index] = geo.frame(in: .global)
+                }
         }
     }
     
     var body: some View {
         GeometryReader { geometry in
             LazyVGrid(columns: ChessViewModel.grid, spacing: 0) {
-                ForEach(chess.board.indices) { index in
+                ForEach(chess.board.indices, id: \.self) { index in
                     ZStack {
                         SquareView(theme: chess.theme,
                                    color: chess.getSquareColor(of: index, with: chess.theme),
                                    number: chess.getSquareNumbers(of: index),
                                    letter: chess.getSquareLetters(of: index),
                                    index: index, width: geometry.size.width * 0.125, height: geometry.size.width * 0.125)
-                        Text("\(index)")
+                        //Text("\(index)")
                     }
                     .allowsHitTesting(false)
                     .overlay(overlay(index))
